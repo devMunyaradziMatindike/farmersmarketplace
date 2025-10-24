@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Your Email - Musika Wedu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             line-height: 1.6;
             color: #333;
             max-width: 600px;
@@ -161,6 +162,11 @@
                 <strong>Musika Wedu</strong><br>
                 Connecting Farmers Across Zimbabwe<br>
                 📧 support@farmersmarket.zw | 📱 +263 77 123 4567
+            </p>
+            
+            <p style="font-size: 12px; color: #6b7280; margin-top: 15px;">
+                <strong>Musika Wedu</strong> is a product of <strong>Nesso Systems (Pvt) Ltd</strong><br>
+                Farm 42 Coburn Estate, Chegutu, Zimbabwe
             </p>
 
             <div class="unsubscribe">

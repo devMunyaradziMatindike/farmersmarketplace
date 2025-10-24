@@ -19,8 +19,13 @@ Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
+// Registration Options Page (Public)
+Route::get('/register', function () {
+    return Inertia::render('Auth/Register');
+})->name('register');
+
 // Dashboard (Authenticated) - Role-based routing
-Route::middleware(['auth', 'email.verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function (Request $request) {
         $user = $request->user();
         
@@ -35,7 +40,7 @@ Route::middleware(['auth', 'email.verified'])->group(function () {
 });
 
 // Admin Routes (Authenticated + Admin Role)
-Route::middleware(['auth', 'email.verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     
@@ -59,7 +64,7 @@ Route::middleware(['auth', 'email.verified', 'role:admin'])->prefix('admin')->na
 });
 
 // Seller Routes (Authenticated)
-Route::middleware(['auth', 'email.verified'])->prefix('seller')->name('seller.')->group(function () {
+Route::middleware(['auth'])->prefix('seller')->name('seller.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('dashboard');
     
@@ -92,7 +97,7 @@ Route::middleware(['auth', 'email.verified'])->prefix('seller')->name('seller.')
 });
 
 // Buyer Routes (Authenticated)
-Route::middleware(['auth', 'email.verified'])->prefix('buyer')->name('buyer.')->group(function () {
+Route::middleware(['auth'])->prefix('buyer')->name('buyer.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [BuyerDashboardController::class, 'index'])->name('dashboard');
     
