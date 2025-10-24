@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/munyaradzimatindike/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/munyaradzimatindike/development/farmersmarketplace/farmersmarketplace/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
