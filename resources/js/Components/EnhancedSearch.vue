@@ -10,7 +10,7 @@
         @keydown.enter="performSearch"
         @keydown.escape="showSuggestions = false"
         placeholder="Search products, crops, or farmers..."
-        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+        class="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
       />
       
       <!-- Search Suggestions Dropdown -->
@@ -24,7 +24,7 @@
           </h4>
           <div v-for="search in recentSearches" :key="search" 
                @click="selectSuggestion(search)"
-               class="flex items-center py-2 px-2 hover:bg-gray-50 cursor-pointer rounded">
+               class="flex items-center py-2 px-2 hover:bg-gray-50 cursor-pointer rounded touch-manipulation">
             <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
@@ -39,7 +39,7 @@
           </h4>
           <div v-for="search in popularSearches" :key="search.term" 
                @click="selectSuggestion(search.term)"
-               class="flex items-center justify-between py-2 px-2 hover:bg-gray-50 cursor-pointer rounded">
+               class="flex items-center justify-between py-2 px-2 hover:bg-gray-50 cursor-pointer rounded touch-manipulation">
             <span class="text-sm">{{ search.term }}</span>
             <span class="text-xs text-gray-400">{{ search.count }} searches</span>
           </div>
@@ -52,7 +52,7 @@
           </h4>
           <div v-for="suggestion in suggestions" :key="suggestion" 
                @click="selectSuggestion(suggestion)"
-               class="py-2 px-2 hover:bg-gray-50 cursor-pointer rounded">
+               class="py-2 px-2 hover:bg-gray-50 cursor-pointer rounded touch-manipulation">
             <span class="text-sm">{{ suggestion }}</span>
           </div>
         </div>
@@ -61,10 +61,11 @@
     
     <!-- Advanced Filters -->
     <div class="filters-section mt-4">
-      <div class="flex flex-wrap gap-4">
+      <!-- Mobile: Stack vertically, Desktop: Horizontal -->
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
         <!-- Category Filter -->
         <select v-model="selectedCategory" @change="applyFilters" 
-                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500">
+                class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500">
           <option value="">All Categories</option>
           <option v-for="category in categories" :key="category.id" :value="category.id">
             {{ category.name }}
@@ -74,15 +75,15 @@
         <!-- Price Range -->
         <div class="flex items-center gap-2">
           <input v-model="minPrice" @input="applyFilters" type="number" 
-                 placeholder="Min Price" class="px-3 py-2 border border-gray-300 rounded-lg w-24 focus:ring-2 focus:ring-primary-500">
-          <span class="text-gray-500">-</span>
+                 placeholder="Min" class="px-3 py-2 text-sm border border-gray-300 rounded-lg w-20 sm:w-24 focus:ring-2 focus:ring-primary-500">
+          <span class="text-gray-500 text-sm">-</span>
           <input v-model="maxPrice" @input="applyFilters" type="number" 
-                 placeholder="Max Price" class="px-3 py-2 border border-gray-300 rounded-lg w-24 focus:ring-2 focus:ring-primary-500">
+                 placeholder="Max" class="px-3 py-2 text-sm border border-gray-300 rounded-lg w-20 sm:w-24 focus:ring-2 focus:ring-primary-500">
         </div>
         
         <!-- Location Filter -->
         <select v-model="selectedLocation" @change="applyFilters"
-                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500">
+                class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500">
           <option value="">All Locations</option>
           <option v-for="location in locations" :key="location" :value="location">
             {{ location }}
@@ -91,7 +92,7 @@
         
         <!-- Sort Options -->
         <select v-model="sortBy" @change="applyFilters"
-                class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500">
+                class="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500">
           <option value="relevance">Most Relevant</option>
           <option value="price_low">Price: Low to High</option>
           <option value="price_high">Price: High to Low</option>

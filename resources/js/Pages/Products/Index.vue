@@ -21,9 +21,9 @@
         <CategoryShowcase v-if="!filters.search && !filters.category_id" :categories="categoriesWithCount" />
 
         <!-- Main Content -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-6 sm:py-8">
             <!-- Enhanced Search Section -->
-            <div v-if="filters.search || showSearchBar" class="mb-8">
+            <div v-if="filters.search || showSearchBar" class="mb-6 sm:mb-8">
                 <EnhancedSearch 
                     :categories="categories"
                     :locations="locations"
@@ -35,7 +35,7 @@
             </div>
 
             <!-- Breadcrumb -->
-            <nav class="flex mb-6 text-sm text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
+            <nav class="flex mb-4 sm:mb-6 text-sm text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
                 <Link :href="route('home')" class="hover:text-primary-600 dark:hover:text-primary-400">
                     Home
                 </Link>
@@ -52,9 +52,9 @@
             </nav>
 
             <!-- Active Filters & Results Count -->
-            <div class="flex items-center justify-between mb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
                         {{ getPageTitle() }}
                     </h2>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -67,26 +67,26 @@
                     <button
                         @click="viewMode = 'grid'"
                         :class="[
-                            'p-2 rounded-lg transition',
+                            'p-2 rounded-lg transition touch-manipulation',
                             viewMode === 'grid'
                                 ? 'bg-primary-600 text-white'
                                 : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                         ]"
                     >
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                         </svg>
                     </button>
                     <button
                         @click="viewMode = 'list'"
                         :class="[
-                            'p-2 rounded-lg transition',
+                            'p-2 rounded-lg transition touch-manipulation',
                             viewMode === 'list'
                                 ? 'bg-primary-600 text-white'
                                 : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                         ]"
                     >
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
                         </svg>
                     </button>
@@ -94,7 +94,7 @@
             </div>
 
             <!-- Content Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6" id="products-grid">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6" id="products-grid">
                 <!-- Filters Sidebar (Desktop) -->
                 <div class="hidden lg:block">
                     <FilterSidebar :filters="filters" />
@@ -106,7 +106,7 @@
                     <div
                         v-if="products.data.length > 0"
                         :class="[
-                            'grid gap-6 mb-8',
+                            'grid gap-4 sm:gap-6 mb-6 sm:mb-8',
                             viewMode === 'grid'
                                 ? 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
                                 : 'grid-cols-1'
@@ -146,10 +146,10 @@
         <SafeTradingSection />
 
         <!-- Footer -->
-        <footer class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <footer class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12 sm:mt-16">
+            <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-12 sm:py-16">
                 <!-- Main Footer Content -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
                     <!-- Company Info -->
                     <div class="lg:col-span-1">
                         <div class="flex items-center gap-3 mb-6">

@@ -2,14 +2,14 @@
     <Link :href="route('products.show', product.id)" class="block group">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-xl transition-all duration-300 overflow-hidden">
             <!-- Product Image -->
-            <div class="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <div class="relative aspect-[4/3] sm:aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
                 <img
                     :src="product.photos?.[0]?.photo_url || '/images/placeholder.svg'"
                     :alt="product.name"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 
-                <!-- Status Badge (Top Right) -->
+                <!-- Status Badge -->
                 <div class="absolute top-2 right-2">
                     <span
                         v-if="product.status === 'available'"
@@ -25,7 +25,7 @@
                     </span>
                 </div>
 
-                <!-- Category Badge (Top Left) -->
+                <!-- Category Badge -->
                 <div class="absolute top-2 left-2">
                     <span class="px-2 py-1 bg-white/90 dark:bg-gray-800/90 text-primary-600 dark:text-primary-400 text-xs font-medium rounded-full backdrop-blur-sm">
                         {{ product.category?.name }}
@@ -34,8 +34,8 @@
             </div>
 
             <!-- Product Info -->
-            <div class="p-4">
-                <!-- Seller Name (Small) -->
+            <div class="p-3 sm:p-4">
+                <!-- Seller Name -->
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
                         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -49,20 +49,20 @@
                 </div>
 
                 <!-- Product Name -->
-                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 min-h-[2.5rem]">
+                <h3 class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 min-h-[2.5rem]">
                     {{ product.name }}
                 </h3>
                 
                 <!-- Price & Location -->
                 <div class="flex items-end justify-between mb-3">
                     <div class="flex-1">
-                        <!-- Primary Price (Seller's Currency) -->
-                        <div class="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                        <!-- Primary Price -->
+                        <div class="text-lg sm:text-2xl font-bold text-primary-600 dark:text-primary-400">
                             {{ product.currency === 'USD' ? '$' : 'ZWG$' }}{{ parseFloat(product.price).toFixed(2) }}
-                            <span class="text-sm text-gray-500 dark:text-gray-400 ml-1">{{ product.currency || 'USD' }}</span>
+                            <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 ml-1">{{ product.currency || 'USD' }}</span>
                         </div>
-                        <!-- Converted Price (Secondary) -->
-                        <div v-if="product.currency && product.currency_rate" class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        <!-- Converted Price -->
+                        <div v-if="product.currency && product.currency_rate" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
                             ≈ {{ product.currency === 'USD' ? 'ZWG$' : '$' }}{{ product.converted_price }}
                         </div>
                         <div class="text-xs text-gray-500 dark:text-gray-400 flex items-center mt-1">
@@ -76,7 +76,7 @@
 
                 <!-- Contact Button -->
                 <button 
-                    class="w-full py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                    class="w-full py-2.5 sm:py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2 touch-manipulation"
                     @click.prevent="contactSeller"
                 >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -16,19 +16,27 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             fontSize: {
-                'xs': ['0.9rem', { lineHeight: '1.2rem' }],      // 0.75rem → 0.9rem (20% increase)
-                'sm': ['1.05rem', { lineHeight: '1.5rem' }],     // 0.875rem → 1.05rem (20% increase)
-                'base': ['1.2rem', { lineHeight: '1.8rem' }],    // 1rem → 1.2rem (20% increase)
-                'lg': ['1.35rem', { lineHeight: '2.1rem' }],     // 1.125rem → 1.35rem (20% increase)
-                'xl': ['1.5rem', { lineHeight: '2.1rem' }],      // 1.25rem → 1.5rem (20% increase)
-                '2xl': ['1.8rem', { lineHeight: '2.4rem' }],     // 1.5rem → 1.8rem (20% increase)
-                '3xl': ['2.28rem', { lineHeight: '2.88rem' }],   // 1.875rem → 2.28rem (20% increase)
-                '4xl': ['2.7rem', { lineHeight: '3rem' }],       // 2.25rem → 2.7rem (20% increase)
-                '5xl': ['3.6rem', { lineHeight: '1' }],          // 3rem → 3.6rem (20% increase)
-                '6xl': ['4.32rem', { lineHeight: '1' }],         // 3.75rem → 4.32rem (20% increase)
-                '7xl': ['5.4rem', { lineHeight: '1' }],          // 4.5rem → 5.4rem (20% increase)
-                '8xl': ['7.2rem', { lineHeight: '1' }],          // 6rem → 7.2rem (20% increase)
-                '9xl': ['9.6rem', { lineHeight: '1' }],          // 8rem → 9.6rem (20% increase)
+                'xs': ['0.75rem', { lineHeight: '1rem' }],      // Smaller for mobile
+                'sm': ['0.875rem', { lineHeight: '1.25rem' }],   // Standard mobile
+                'base': ['1rem', { lineHeight: '1.5rem' }],       // Standard desktop
+                'lg': ['1.125rem', { lineHeight: '1.75rem' }],   // Large desktop
+                'xl': ['1.25rem', { lineHeight: '1.75rem' }],    // Extra large
+                '2xl': ['1.5rem', { lineHeight: '2rem' }],       // Headings
+                '3xl': ['1.875rem', { lineHeight: '2.25rem' }],  // Large headings
+                '4xl': ['2.25rem', { lineHeight: '2.5rem' }],    // Hero text
+                '5xl': ['3rem', { lineHeight: '1' }],            // Display text
+                '6xl': ['3.75rem', { lineHeight: '1' }],         // Large display
+                '7xl': ['4.5rem', { lineHeight: '1' }],          // Extra large display
+                '8xl': ['6rem', { lineHeight: '1' }],             // Massive display
+                '9xl': ['8rem', { lineHeight: '1' }],             // Huge display
+            },
+            screens: {
+                'xs': '475px',   // Extra small devices
+                'sm': '640px',   // Small devices
+                'md': '768px',   // Medium devices
+                'lg': '1024px',  // Large devices
+                'xl': '1280px',  // Extra large devices
+                '2xl': '1536px', // 2X large devices
             },
             colors: {
                 primary: {
@@ -47,6 +55,13 @@ export default {
                 secondary: {
                     500: '#fbbf24',  // Golden yellow for accent
                 },
+            },
+            spacing: {
+                '18': '4.5rem',
+                '88': '22rem',
+            },
+            minHeight: {
+                'screen-75': '75vh',
             },
         },
     },
