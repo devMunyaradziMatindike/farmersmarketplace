@@ -54,8 +54,25 @@ const isEmailAlreadyVerified = computed(() => props.status === 'email-already-ve
                 MUSIKA WEDU
             </h1>
             <p class="text-gray-600 dark:text-gray-400">
-                Zimbabwe's Premier Agricultural Marketplace
+                Seller Login Portal
             </p>
+        </div>
+
+        <!-- Information Box -->
+        <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                    <h3 class="text-sm font-medium text-blue-800 dark:text-blue-200">
+                        For Sellers Only
+                    </h3>
+                    <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">
+                        This login is for sellers and farmers. Buyers can browse products without logging in.
+                    </p>
+                </div>
+            </div>
         </div>
 
         <!-- Email Verification Status Messages -->
@@ -193,14 +210,30 @@ const isEmailAlreadyVerified = computed(() => props.status === 'email-already-ve
         <!-- Register Link -->
         <div class="mt-6 text-center">
             <p class="text-sm text-gray-600 dark:text-gray-400">
-                Don't have an account?
+                Don't have a seller account?
                 <Link
                     :href="route('register')"
                     class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
                 >
-                    Register now
+                    Register as seller
                 </Link>
             </p>
+        </div>
+
+        <!-- Buyer Information -->
+        <div class="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg">
+            <h4 class="font-semibold text-green-800 dark:text-green-200 mb-2">
+                Just want to browse products?
+            </h4>
+            <p class="text-sm text-green-700 dark:text-green-300 mb-3">
+                You don't need to login to browse and contact sellers.
+            </p>
+            <Link
+                :href="route('home')"
+                class="text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 text-sm font-medium"
+            >
+                ← Go back to browse products
+            </Link>
         </div>
     </GuestLayout>
 </template>

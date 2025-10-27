@@ -63,12 +63,12 @@
                         </div>
                         
                         <!-- CTA Buttons -->
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                             <Link 
                                 :href="getCta1Link(slide)"
                                 class="bg-white text-primary-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary-50 transition-colors duration-300 flex items-center justify-center gap-2"
                             >
-                                <span>🚜</span>
+                                <span>🛒</span>
                                 {{ slide.cta1 }}
                             </Link>
                             <Link 
@@ -78,6 +78,19 @@
                                 <span>📱</span>
                                 {{ slide.cta2 }}
                             </Link>
+                        </div>
+
+                        <!-- Buyer Information -->
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 max-w-xl mx-auto">
+                            <div class="flex items-center justify-center gap-2 mb-2">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                                <span class="text-white font-semibold">For Buyers</span>
+                            </div>
+                            <p class="text-white/90 text-sm">
+                                ✅ No registration required • Browse freely • Contact sellers directly
+                            </p>
                         </div>
                     </div>
                 </div>

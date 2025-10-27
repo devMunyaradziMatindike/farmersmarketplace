@@ -72,13 +72,13 @@
                             :href="route('login')"
                             class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition"
                         >
-                            Login
+                            Seller Login
                         </Link>
                         <Link
                             :href="route('register')"
                             class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition"
                         >
-                            Register
+                            Become a Seller
                         </Link>
                     </div>
                 </div>
