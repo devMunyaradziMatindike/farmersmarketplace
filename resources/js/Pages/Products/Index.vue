@@ -1,5 +1,19 @@
 <template>
-    <Head title="Browse Products - Musika Wedu" />
+    <Head>
+        <title>{{ getPageTitle() }} - Musika Wedu | Zimbabwe Agricultural Marketplace</title>
+        <meta name="description" :content="getPageDescription()">
+        <meta name="keywords" :content="getPageKeywords()">
+        <link rel="canonical" :href="getCanonicalUrl()">
+        
+        <!-- Open Graph for Products Page -->
+        <meta property="og:title" :content="getPageTitle() + ' - Musika Wedu'">
+        <meta property="og:description" :content="getPageDescription()">
+        <meta property="og:url" :content="getCanonicalUrl()">
+        <meta property="og:type" content="website">
+        
+        <!-- Structured Data for Product Listings -->
+        <script type="application/ld+json" v-html="getStructuredData()"></script>
+    </Head>
 
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
         <!-- Header -->
@@ -432,6 +446,75 @@ const getPageTitle = () => {
         return getCurrentCategoryName();
     }
     return 'All Products';
+};
+
+// SEO Methods
+const getPageDescription = () => {
+    if (props.filters.search) {
+        return `Find ${props.products?.total || 0} agricultural products matching "${props.filters.search}" on Musika Wedu, Zimbabwe's premier agricultural marketplace.`;
+    }
+    if (props.filters.category_id) {
+        const category = props.categories?.find(c => c.id === props.filters.category_id);
+        return `Browse ${category?.name || 'agricultural'} products from verified farmers across Zimbabwe. Buy and sell on Musika Wedu marketplace.`;
+    }
+    return 'Browse thousands of agricultural products from verified farmers across Zimbabwe. Crops, livestock, equipment, and more on Musika Wedu marketplace.';
+};
+
+const getPageKeywords = () => {
+    const baseKeywords = 'agricultural products Zimbabwe, farmers Zimbabwe, crops Zimbabwe, livestock Zimbabwe, agricultural equipment Zimbabwe, Musika Wedu';
+    
+    if (props.filters.search) {
+        return `${props.filters.search}, ${baseKeywords}`;
+    }
+    if (props.filters.category_id) {
+        const category = props.categories?.find(c => c.id === props.filters.category_id);
+        return `${category?.name || 'agricultural'} Zimbabwe, ${baseKeywords}`;
+    }
+    return baseKeywords;
+};
+
+const getCanonicalUrl = () => {
+    const baseUrl = 'https://musikawedu.co.zw';
+    if (props.filters.search) {
+        return `${baseUrl}/products?search=${encodeURIComponent(props.filters.search)}`;
+    }
+    if (props.filters.category_id) {
+        return `${baseUrl}/products?category_id=${props.filters.category_id}`;
+    }
+    return `${baseUrl}/products`;
+};
+
+const getStructuredData = () => {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": getPageTitle(),
+        "description": getPageDescription(),
+        "url": getCanonicalUrl(),
+        "numberOfItems": props.products?.total || 0,
+        "itemListElement": props.products?.data?.slice(0, 10).map((product, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+                "@type": "Product",
+                "name": product.name,
+                "description": product.description,
+                "image": product.photos?.[0]?.photo_url || '/images/placeholder.svg',
+                "offers": {
+                    "@type": "Offer",
+                    "price": product.price,
+                    "priceCurrency": product.currency || "USD",
+                    "availability": product.status === 'available' ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+                },
+                "seller": {
+                    "@type": "Person",
+                    "name": product.user?.name
+                }
+            }
+        })) || []
+    };
+    
+    return JSON.stringify(structuredData);
 };
 
 // Enhanced search handlers

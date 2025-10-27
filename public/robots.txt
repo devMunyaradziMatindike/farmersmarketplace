@@ -1,2 +1,10 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin/
+Disallow: /seller/
+Disallow: /buyer/
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /settings
+
+Sitemap: https://musikawedu.co.zw/sitemap.xml

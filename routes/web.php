@@ -10,9 +10,32 @@ use App\Http\Controllers\Web\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Web\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Web\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Web\Admin\SettingsController as AdminSettingsController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+
+// SEO Routes
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
+Route::get('/sitemap-static.xml', [SitemapController::class, 'static']);
+Route::get('/sitemap-categories.xml', [SitemapController::class, 'categories']);
+Route::get('/sitemap-products.xml', [SitemapController::class, 'products']);
+
+// Robots.txt
+Route::get('/robots.txt', function () {
+    $robots = "User-agent: *\n";
+    $robots .= "Allow: /\n";
+    $robots .= "Disallow: /admin/\n";
+    $robots .= "Disallow: /seller/\n";
+    $robots .= "Disallow: /buyer/\n";
+    $robots .= "Disallow: /dashboard\n";
+    $robots .= "Disallow: /profile\n";
+    $robots .= "Disallow: /settings\n";
+    $robots .= "\n";
+    $robots .= "Sitemap: https://musikawedu.co.zw/sitemap.xml\n";
+    
+    return response($robots, 200, ['Content-Type' => 'text/plain']);
+});
 
 // Home and Products Routes (Public)
 Route::get('/', [ProductController::class, 'index'])->name('home');

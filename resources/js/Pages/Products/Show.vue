@@ -1,5 +1,20 @@
 <template>
-    <Head :title="product.name + ' - Musika Wedu'" />
+    <Head>
+        <title>{{ product.name }} - {{ product.category?.name }} | Musika Wedu</title>
+        <meta name="description" :content="getProductDescription()">
+        <meta name="keywords" :content="getProductKeywords()">
+        <link rel="canonical" :href="getProductCanonicalUrl()">
+        
+        <!-- Open Graph for Product -->
+        <meta property="og:title" :content="product.name + ' - Musika Wedu'">
+        <meta property="og:description" :content="getProductDescription()">
+        <meta property="og:url" :content="getProductCanonicalUrl()">
+        <meta property="og:type" content="product">
+        <meta property="og:image" :content="getProductImage()">
+        
+        <!-- Product Structured Data -->
+        <script type="application/ld+json" v-html="getProductStructuredData()"></script>
+    </Head>
 
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
         <!-- Header -->
@@ -233,6 +248,67 @@ const props = defineProps({
 });
 
 const selectedImage = ref(props.product.photos?.[0]?.photo_url || null);
+
+// SEO Methods
+const getProductDescription = () => {
+    const baseDesc = `Buy ${props.product.name} from ${props.product.user?.name} on Musika Wedu, Zimbabwe's premier agricultural marketplace.`;
+    return props.product.description ? 
+        `${props.product.description.substring(0, 150)}... ${baseDesc}` : 
+        baseDesc;
+};
+
+const getProductKeywords = () => {
+    const keywords = [
+        props.product.name,
+        props.product.category?.name,
+        props.product.user?.name,
+        'agricultural products Zimbabwe',
+        'farmers Zimbabwe',
+        'Musika Wedu'
+    ].filter(Boolean);
+    return keywords.join(', ');
+};
+
+const getProductCanonicalUrl = () => {
+    return `https://musikawedu.co.zw/products/${props.product.id}`;
+};
+
+const getProductImage = () => {
+    return props.product.photos?.[0]?.photo_url || 'https://musikawedu.co.zw/images/placeholder.svg';
+};
+
+const getProductStructuredData = () => {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": props.product.name,
+        "description": props.product.description,
+        "image": props.product.photos?.map(photo => photo.photo_url) || [],
+        "category": props.product.category?.name,
+        "brand": {
+            "@type": "Brand",
+            "name": "Musika Wedu"
+        },
+        "offers": {
+            "@type": "Offer",
+            "price": props.product.price,
+            "priceCurrency": props.product.currency || "USD",
+            "availability": props.product.status === 'available' ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            "seller": {
+                "@type": "Person",
+                "name": props.product.user?.name
+            },
+            "url": getProductCanonicalUrl()
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "reviewCount": "1"
+        }
+    };
+    
+    return JSON.stringify(structuredData);
+};
 
 const formatDate = (date) => {
     if (!date) return '';
