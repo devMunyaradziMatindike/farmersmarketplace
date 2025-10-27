@@ -22,6 +22,18 @@
 
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Enhanced Search Section -->
+            <div v-if="filters.search || showSearchBar" class="mb-8">
+                <EnhancedSearch 
+                    :categories="categories"
+                    :locations="locations"
+                    :initial-query="filters.search"
+                    :initial-filters="filters"
+                    @search="handleSearch"
+                    @filter-change="handleFilterChange"
+                />
+            </div>
+
             <!-- Breadcrumb -->
             <nav class="flex mb-6 text-sm text-gray-500 dark:text-gray-400" aria-label="Breadcrumb">
                 <Link :href="route('home')" class="hover:text-primary-600 dark:hover:text-primary-400">
@@ -107,26 +119,17 @@
                         />
                     </div>
 
-                    <!-- Empty State -->
-                    <div v-else class="text-center py-16">
-                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
-                            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                            No products found
-                        </h3>
-                        <p class="text-gray-600 dark:text-gray-400 mb-6">
-                            Try adjusting your filters or search term
-                        </p>
-                        <Link
-                            :href="route('products.index')"
-                            class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition"
-                        >
-                            Browse All Products
-                        </Link>
-                    </div>
+                    <!-- Enhanced Empty State -->
+                    <EnhancedEmptyState 
+                        :search-query="filters.search"
+                        :is-loading="isLoading"
+                        :active-filters="filters"
+                        :show-market-insights="showMarketInsights"
+                        :market-insights="marketInsights"
+                        @clear-filters="clearFilters"
+                        @browse-categories="browseCategories"
+                        @try-suggestion="trySuggestion"
+                    />
 
                     <!-- Pagination -->
                     <div v-if="products.data.length > 0" class="flex justify-center">
@@ -349,6 +352,8 @@ import FilterSidebar from '@/Components/FilterSidebar.vue';
 import Pagination from '@/Components/Pagination.vue';
 import PartnersCarousel from '@/Components/PartnersCarousel.vue';
 import SafeTradingSection from '@/Components/SafeTradingSection.vue';
+import EnhancedSearch from '@/Components/EnhancedSearch.vue';
+import EnhancedEmptyState from '@/Components/EnhancedEmptyState.vue';
 
 const props = defineProps({
     products: {
@@ -378,10 +383,23 @@ const props = defineProps({
     exchangeRate: {
         type: Number,
         default: 13.5000
+    },
+    locations: {
+        type: Array,
+        default: () => []
     }
 });
 
 const viewMode = ref('grid');
+const isLoading = ref(false);
+const showSearchBar = ref(false);
+const showMarketInsights = ref(true);
+
+// Market insights data
+const marketInsights = ref({
+    popularCrop: 'Maize',
+    priceTrend: 'Rising'
+});
 
 // Currency conversion helper
 const convertPrice = (amount, from, to) => {
@@ -414,5 +432,39 @@ const getPageTitle = () => {
         return getCurrentCategoryName();
     }
     return 'All Products';
+};
+
+// Enhanced search handlers
+const handleSearch = (searchParams) => {
+    isLoading.value = true;
+    
+    // Build URL with search parameters
+    const url = new URL(window.location.href);
+    Object.keys(searchParams).forEach(key => {
+        if (searchParams[key]) {
+            url.searchParams.set(key, searchParams[key]);
+        } else {
+            url.searchParams.delete(key);
+        }
+    });
+    
+    // Navigate to new URL
+    window.location.href = url.toString();
+};
+
+const handleFilterChange = (filters) => {
+    handleSearch(filters);
+};
+
+const clearFilters = () => {
+    window.location.href = route('products.index');
+};
+
+const browseCategories = () => {
+    window.location.href = route('products.index');
+};
+
+const trySuggestion = (suggestion) => {
+    handleSearch({ q: suggestion });
 };
 </script>

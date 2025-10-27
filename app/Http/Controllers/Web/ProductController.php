@@ -21,13 +21,25 @@ class ProductController extends Controller
         $query = Product::with(['category', 'user', 'photos'])
             ->available();
 
-        // Search by name
-        if ($request->filled('search')) {
+        // Enhanced search functionality
+        if ($request->filled('q')) {
+            $searchTerm = $request->q;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%")
+                    ->orWhereHas('category', function ($catQuery) use ($searchTerm) {
+                        $catQuery->where('name', 'like', "%{$searchTerm}%");
+                    });
+            });
+        } elseif ($request->filled('search')) {
+            // Legacy search parameter
             $query->searchByName($request->search);
         }
 
         // Filter by category
-        if ($request->filled('category_id')) {
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        } elseif ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
 
@@ -36,17 +48,29 @@ class ProductController extends Controller
             $query->filterByPrice($request->min_price, $request->max_price);
         }
 
+        // Filter by location
+        if ($request->filled('location')) {
+            $query->whereHas('user', function ($userQuery) use ($request) {
+                $userQuery->where('location', 'like', "%{$request->location}%");
+            });
+        }
+
         // Filter by location (nearby)
         if ($request->filled('latitude') && $request->filled('longitude')) {
             $radius = $request->radius ?? 50;
             $query->nearby($request->latitude, $request->longitude, $radius);
         }
 
-        // Sorting
-        $sort = $request->sort ?? 'latest';
+        // Enhanced sorting
+        $sort = $request->sort ?? 'relevance';
         match ($sort) {
-            'cheapest' => $query->orderBy('price', 'asc'),
+            'price_low' => $query->orderBy('price', 'asc'),
+            'price_high' => $query->orderBy('price', 'desc'),
+            'newest' => $query->orderBy('date_listed', 'desc'),
+            'popular' => $query->orderBy('views_count', 'desc'),
+            'cheapest' => $query->orderBy('price', 'asc'), // Legacy
             'nearest' => null, // Already ordered by distance in nearby scope
+            'relevance' => $query->orderBy('date_listed', 'desc'), // Default
             default => $query->orderBy('date_listed', 'desc'),
         };
 
@@ -68,13 +92,28 @@ class ProductController extends Controller
         $currencySettings = CurrencySetting::current();
         $exchangeRate = $currencySettings?->zwg_to_usd_rate ?? 13.5000;
 
+        // Get unique locations for filter dropdown (if location column exists)
+        $locations = collect();
+        try {
+            $locations = User::whereNotNull('location')
+                ->where('location', '!=', '')
+                ->distinct()
+                ->pluck('location')
+                ->sort()
+                ->values();
+        } catch (\Exception $e) {
+            // Location column doesn't exist, return empty collection
+            $locations = collect();
+        }
+
         return Inertia::render('Products/Index', [
             'products' => $products,
             'categories' => Category::all(),
             'categoriesWithCount' => $categoriesWithCount,
-            'filters' => $request->only(['search', 'category_id', 'sort', 'min_price', 'max_price', 'location']),
+            'filters' => $request->only(['q', 'search', 'category', 'category_id', 'sort', 'min_price', 'max_price', 'location']),
             'stats' => $stats,
             'exchangeRate' => $exchangeRate,
+            'locations' => $locations,
         ]);
     }
 

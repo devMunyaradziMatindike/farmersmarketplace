@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\V1\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Api\V1\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\V1\Admin\UserController as AdminUserController;
@@ -32,6 +33,11 @@ Route::prefix('v1')->group(function (): void {
     // Category routes (Public access)
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{category}', [CategoryController::class, 'show']);
+
+    // Search routes (Public access)
+    Route::get('search/suggestions', [SearchController::class, 'suggestions']);
+    Route::get('search/popular', [SearchController::class, 'popular']);
+    Route::get('search', [SearchController::class, 'search']);
 
     // Authentication routes
     Route::prefix('auth')->group(function (): void {
@@ -82,5 +88,8 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function (): void {
 
         // Product management (Remove fraudulent listings)
         Route::delete('products/{product}', [AdminProductController::class, 'destroy']);
+
+        // Search analytics
+        Route::get('search/analytics', [SearchController::class, 'analytics']);
     });
 });
