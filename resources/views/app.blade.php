@@ -83,8 +83,8 @@
         <!-- Structured Data (JSON-LD) -->
         <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "Organization",
+            "@@context": "https://schema.org",
+            "@@type": "Organization",
             "name": "Musika Wedu",
             "alternateName": "Musika Wedu Agricultural Marketplace",
             "url": "https://musikawedu.co.zw",
@@ -92,17 +92,17 @@
             "description": "Zimbabwe's premier agricultural marketplace connecting farmers, suppliers, and buyers",
             "foundingDate": "2025",
             "founder": {
-                "@type": "Organization",
+                "@@type": "Organization",
                 "name": "Nesso Systems (Pvt) Ltd"
             },
             "address": {
-                "@type": "PostalAddress",
+                "@@type": "PostalAddress",
                 "streetAddress": "Farm 42 Coburn Estate",
                 "addressLocality": "Chegutu",
                 "addressCountry": "ZW"
             },
             "contactPoint": {
-                "@type": "ContactPoint",
+                "@@type": "ContactPoint",
                 "telephone": "+263-78-233-9300",
                 "contactType": "customer service",
                 "email": "info@nessosystems.co.zw"
@@ -113,32 +113,32 @@
                 "https://www.linkedin.com/company/musika-wedu"
             ],
             "areaServed": {
-                "@type": "Country",
+                "@@type": "Country",
                 "name": "Zimbabwe"
             },
             "serviceType": "Agricultural Marketplace",
             "hasOfferCatalog": {
-                "@type": "OfferCatalog",
+                "@@type": "OfferCatalog",
                 "name": "Agricultural Products",
                 "itemListElement": [
                     {
-                        "@type": "Offer",
+                        "@@type": "Offer",
                         "itemOffered": {
-                            "@type": "Product",
+                            "@@type": "Product",
                             "name": "Crops and Grains"
                         }
                     },
                     {
-                        "@type": "Offer",
+                        "@@type": "Offer",
                         "itemOffered": {
-                            "@type": "Product",
+                            "@@type": "Product",
                             "name": "Livestock"
                         }
                     },
                     {
-                        "@type": "Offer",
+                        "@@type": "Offer",
                         "itemOffered": {
-                            "@type": "Product",
+                            "@@type": "Product",
                             "name": "Agricultural Equipment"
                         }
                     }
