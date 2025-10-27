@@ -67,7 +67,7 @@ npm run dev
 - Laravel Sanctum (API Authentication)
 - Twilio SDK (OTP via SMS)
 - Laravel Socialite (Google OAuth)
-- SQLite (Dev) / MySQL (Production)
+- MySQL 8.0+ (Required for Production)
 
 ### **Frontend**
 - Vue 3 (Composition API)
@@ -81,10 +81,11 @@ npm run dev
 ## 📦 Installation
 
 ### **Prerequisites:**
-- PHP 8.2+
+- PHP 8.4+
 - Composer
 - Node.js 18+
 - npm
+- MySQL 8.0+ (Required for Production)
 
 ### **Setup:**
 
@@ -97,13 +98,16 @@ npm install --legacy-peer-deps
 cp .env.example .env
 php artisan key:generate
 
-# 3. Set up database
+# 3. Configure database settings in .env
+# Set DB_CONNECTION=mysql and MySQL credentials
+
+# 4. Set up database
 php artisan migrate --seed
 
-# 4. Create storage link
+# 5. Create storage link
 php artisan storage:link
 
-# 5. Start application
+# 6. Start application
 npm run serve
 ```
 
@@ -263,16 +267,31 @@ php artisan test --coverage
 
 ## 🚀 Production Deployment
 
+### **⚠️ MySQL Requirements:**
+- **MySQL Version:** 8.0 or higher (Required)
+- **Character Set:** utf8mb4
+- **Collation:** utf8mb4_unicode_ci
+- **Storage Engine:** InnoDB
+
 ### **Environment Configuration:**
 ```env
 # Production settings
 APP_ENV=production
 APP_DEBUG=false
 
-# Database (MySQL recommended)
+# Database (MySQL 8.0+ Required)
 DB_CONNECTION=mysql
-DB_HOST=your-db-host
-DB_DATABASE=farmers_marketplace
+DB_HOST=your-mysql-host
+DB_PORT=3306
+DB_DATABASE=musikawedu
+DB_USERNAME=your-mysql-user
+DB_PASSWORD=your-mysql-password
+
+# Cache (Use file for production)
+CACHE_STORE=file
+
+# Session (Use file for production)
+SESSION_DRIVER=file
 
 # Twilio (for OTP)
 TWILIO_SID=your_sid
@@ -284,13 +303,65 @@ GOOGLE_CLIENT_ID=your_client_id
 GOOGLE_CLIENT_SECRET=your_secret
 ```
 
+### **MySQL Setup Commands:**
+```sql
+-- Create database
+CREATE DATABASE musikawedu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Create user
+CREATE USER 'musikawedu_user'@'localhost' IDENTIFIED BY 'secure_password';
+
+-- Grant privileges
+GRANT ALL PRIVILEGES ON musikawedu.* TO 'musikawedu_user'@'localhost';
+FLUSH PRIVILEGES;
+```
+
 ### **Build & Optimize:**
 ```bash
 npm run build
 php artisan optimize
 php artisan config:cache
 php artisan route:cache
+php artisan view:cache
 ```
+
+---
+
+## 🔄 Database Migration (SQLite to MySQL)
+
+### **If migrating from SQLite to MySQL:**
+
+```bash
+# 1. Backup your SQLite data (if needed)
+cp database/database.sqlite database/database.sqlite.backup
+
+# 2. Update .env file
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=musikawedu
+DB_USERNAME=musikawedu_admin
+DB_PASSWORD=
+
+# 3. Change cache and session to file
+CACHE_STORE=file
+SESSION_DRIVER=file
+
+# 4. Clear configuration cache
+php artisan config:clear
+
+# 5. Run fresh migrations
+php artisan migrate:fresh --seed
+
+# 6. Remove SQLite file
+rm database/database.sqlite
+```
+
+### **⚠️ Important Notes:**
+- MySQL 8.0+ is **required** for production
+- SQLite is only suitable for development/testing
+- Always backup data before migration
+- Use `utf8mb4` character set for proper Unicode support
 
 ---
 
@@ -397,4 +468,4 @@ The UI is fully responsive and works perfectly on:
 
 **Version:** 1.0.0  
 **Status:** ✅ Production Ready  
-**Last Updated:** October 20, 2025
+**Last Updated:** October 27, 2025
