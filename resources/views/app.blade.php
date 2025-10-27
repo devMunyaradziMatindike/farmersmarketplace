@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
         
         <!-- SEO Meta Tags -->
-        <title inertia>{{ config('app.name', 'Musika Wedu') }} - Zimbabwe's Premier Agricultural Marketplace</title>
+        <title>{{ config('app.name', 'Musika Wedu') }} - Zimbabwe's Premier Agricultural Marketplace</title>
         <meta name="description" content="Musika Wedu is Zimbabwe's leading agricultural marketplace connecting farmers, suppliers, and buyers. Buy and sell crops, livestock, equipment, and agricultural products across Zimbabwe.">
         <meta name="keywords" content="agricultural marketplace Zimbabwe, farmers Zimbabwe, crops Zimbabwe, livestock Zimbabwe, agricultural equipment Zimbabwe, Musika Wedu, farming Zimbabwe, agricultural products Zimbabwe">
         <meta name="author" content="Nesso Systems (Pvt) Ltd">
