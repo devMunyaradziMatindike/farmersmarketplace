@@ -11,8 +11,7 @@
         <meta property="og:url" :content="getCanonicalUrl()">
         <meta property="og:type" content="website">
         
-        <!-- Structured Data for Product Listings -->
-        <script type="application/ld+json" v-html="getStructuredData()"></script>
+        <!-- Structured Data will be injected via document head -->
     </Head>
 
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -354,7 +353,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import AppHeader from '@/Components/AppHeader.vue';
 import CategoryBar from '@/Components/CategoryBar.vue';
@@ -484,7 +483,7 @@ const getCanonicalUrl = () => {
     return `${baseUrl}/products`;
 };
 
-const getStructuredData = () => {
+const injectStructuredData = () => {
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -514,7 +513,18 @@ const getStructuredData = () => {
         })) || []
     };
     
-    return JSON.stringify(structuredData);
+    // Remove existing structured data script
+    const existingScript = document.querySelector('script[data-page-structured-data]');
+    if (existingScript) {
+        existingScript.remove();
+    }
+    
+    // Create new structured data script
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('data-page-structured-data', 'true');
+    script.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(script);
 };
 
 // Enhanced search handlers
@@ -550,4 +560,9 @@ const browseCategories = () => {
 const trySuggestion = (suggestion) => {
     handleSearch({ q: suggestion });
 };
+
+// Inject structured data when component mounts
+onMounted(() => {
+    injectStructuredData();
+});
 </script>

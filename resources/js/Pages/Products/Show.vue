@@ -12,8 +12,7 @@
         <meta property="og:type" content="product">
         <meta property="og:image" :content="getProductImage()">
         
-        <!-- Product Structured Data -->
-        <script type="application/ld+json" v-html="getProductStructuredData()"></script>
+        <!-- Product Structured Data will be injected via document head -->
     </Head>
 
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -235,7 +234,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import AppHeader from '@/Components/AppHeader.vue';
 import CategoryBar from '@/Components/CategoryBar.vue';
@@ -277,7 +276,7 @@ const getProductImage = () => {
     return props.product.photos?.[0]?.photo_url || 'https://musikawedu.co.zw/images/placeholder.svg';
 };
 
-const getProductStructuredData = () => {
+const injectProductStructuredData = () => {
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "Product",
@@ -307,7 +306,18 @@ const getProductStructuredData = () => {
         }
     };
     
-    return JSON.stringify(structuredData);
+    // Remove existing structured data script
+    const existingScript = document.querySelector('script[data-product-structured-data]');
+    if (existingScript) {
+        existingScript.remove();
+    }
+    
+    // Create new structured data script
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('data-product-structured-data', 'true');
+    script.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(script);
 };
 
 const formatDate = (date) => {
@@ -340,4 +350,9 @@ const shareProduct = async () => {
         }
     }
 };
+
+// Inject structured data when component mounts
+onMounted(() => {
+    injectProductStructuredData();
+});
 </script>
