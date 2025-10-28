@@ -65,8 +65,8 @@ class ProductController extends Controller
                     'id' => $product->category->id,
                     'name' => $product->category->name,
                 ],
-                'primary_photo' => $product->primaryPhoto->first() ? 
-                    $product->primaryPhoto->first()->photo_url : 
+                'primary_photo' => $product->photos->where('is_primary', true)->first()?->photo_url ?? 
+                    $product->photos->first()?->photo_url ?? 
                     '/images/placeholder.svg',
                 'created_at' => $product->created_at->format('Y-m-d H:i:s'),
             ];
