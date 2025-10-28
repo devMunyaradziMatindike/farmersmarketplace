@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import AdminNavigation from '@/Components/Admin/AdminNavigation.vue';
 import CrownIcon from '@/Components/Icons/CrownIcon.vue';
