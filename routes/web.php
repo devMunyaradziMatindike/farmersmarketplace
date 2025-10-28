@@ -42,6 +42,11 @@ Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
+// Market Pricing Page (Public)
+Route::get('/market-pricing', function () {
+    return Inertia::render('MarketPricing');
+})->name('market.pricing');
+
 // Registration Options Page (Public)
 Route::get('/register', function () {
     return Inertia::render('Auth/Register');

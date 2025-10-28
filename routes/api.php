@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Admin\CategoryController as AdminCategoryControl
 use App\Http\Controllers\Api\V1\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Api\V1\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\V1\Auth\GoogleAuthController;
+use App\Http\Controllers\Api\MarketPricingController;
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\Auth\OTPController;
 use App\Http\Controllers\Api\V1\Auth\PasswordResetController;
@@ -38,6 +39,10 @@ Route::prefix('v1')->group(function (): void {
     Route::get('search/suggestions', [SearchController::class, 'suggestions']);
     Route::get('search/popular', [SearchController::class, 'popular']);
     Route::get('search', [SearchController::class, 'search']);
+
+    // Market prices (Public)
+    Route::get('market-prices', [MarketPricingController::class, 'index']);
+    Route::get('market-categories', [MarketPricingController::class, 'getCategories']);
 
     // Authentication routes
     Route::prefix('auth')->group(function (): void {
