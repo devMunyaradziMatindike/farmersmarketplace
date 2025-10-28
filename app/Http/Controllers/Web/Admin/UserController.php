@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request): Response
     {
-        $query = User::query();
+        $query = User::withCount('products');
 
         // Search
         if ($request->filled('search')) {
@@ -50,7 +50,7 @@ class UserController extends Controller
                 'role' => $user->role,
                 'auth_method' => $user->auth_method,
                 'created_at' => $user->created_at->format('Y-m-d H:i:s'),
-                'products_count' => $user->products()->count(),
+                'products_count' => $user->products_count, // Use the eager loaded count
             ];
         });
 
@@ -101,7 +101,7 @@ class UserController extends Controller
                 'category' => $product->category->name,
                 'photos' => $product->photos->map(function ($photo) {
                     return [
-                        'photo_url' => asset('storage/' . $photo->photo_path),
+                        'photo_url' => $photo->photo_url,
                     ];
                 }),
                 'created_at' => $product->created_at->format('Y-m-d H:i:s'),
