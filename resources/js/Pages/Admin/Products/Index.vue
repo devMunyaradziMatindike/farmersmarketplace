@@ -263,18 +263,29 @@ const rejectProduct = (productId) => {
                                 Showing {{ products.from }} to {{ products.to }} of {{ products.total }} products
                             </div>
                             <div class="flex space-x-2">
-                                <Link
-                                    v-for="link in products.links"
-                                    :key="link.label"
-                                    :href="link.url"
-                                    :class="[
-                                        'px-3 py-1 rounded-md text-sm',
-                                        link.active
-                                            ? 'bg-primary-600 text-white'
-                                            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-                                    ]"
-                                    v-html="link.label"
-                                ></Link>
+                                <template v-for="link in products.links" :key="link.label">
+                                    <span
+                                        v-if="!link.url"
+                                        :class="[
+                                            'px-3 py-1 rounded-md text-sm cursor-not-allowed opacity-50',
+                                            link.active
+                                                ? 'bg-primary-600 text-white'
+                                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                                        ]"
+                                        v-html="link.label"
+                                    ></span>
+                                    <Link
+                                        v-else
+                                        :href="link.url"
+                                        :class="[
+                                            'px-3 py-1 rounded-md text-sm',
+                                            link.active
+                                                ? 'bg-primary-600 text-white'
+                                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                        ]"
+                                        v-html="link.label"
+                                    />
+                                </template>
                             </div>
                         </div>
                     </div>
