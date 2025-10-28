@@ -85,7 +85,7 @@ class MarketPricingController extends Controller
     private function getAllPrices(): array
     {
         try {
-            $content = Storage::disk('local')->get('private/market_prices/latest_all_categories.json');
+            $content = Storage::disk('local')->get('market_prices/latest_all_categories.json');
             return $content ? json_decode($content, true) : [];
         } catch (\Exception $e) {
             return [];

@@ -428,21 +428,21 @@ class MultiCategoryPriceScraper
         $priceDate = now()->toDateString();
         
         // Store category-specific files
-        $filename = "private/market_prices/{$category}_{$priceDate}.json";
+        $filename = "market_prices/{$category}_{$priceDate}.json";
         Storage::disk('local')->put($filename, json_encode($prices, JSON_PRETTY_PRINT));
         
         // Store latest for each category
-        Storage::disk('local')->put("private/market_prices/latest_{$category}.json", json_encode($prices, JSON_PRETTY_PRINT));
+        Storage::disk('local')->put("market_prices/latest_{$category}.json", json_encode($prices, JSON_PRETTY_PRINT));
         
         // Store combined latest
         $allLatest = [];
         foreach (array_keys($this->sources) as $cat) {
-            $content = Storage::disk('local')->get("private/market_prices/latest_{$cat}.json");
+            $content = Storage::disk('local')->get("market_prices/latest_{$cat}.json");
             if ($content) {
                 $allLatest = array_merge($allLatest, json_decode($content, true));
             }
         }
-        Storage::disk('local')->put('private/market_prices/latest_all_categories.json', json_encode($allLatest, JSON_PRETTY_PRINT));
+        Storage::disk('local')->put('market_prices/latest_all_categories.json', json_encode($allLatest, JSON_PRETTY_PRINT));
     }
 
     private function parsePrice(string $value): ?float
