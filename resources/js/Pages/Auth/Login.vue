@@ -47,7 +47,7 @@ const isEmailAlreadyVerified = computed(() => props.status === 'email-already-ve
 <template>
     <GuestLayout>
         <Head>
-            <title>Seller Login Portal - Musika Wedu | Zimbabwe Agricultural Marketplace</title>
+            <title>Seller Login Portal - 🌾 Musika Wedu | todye tichiguta</title>
             <meta name="description" content="Login to your Musika Wedu seller account. Access your dashboard, manage products, and grow your agricultural business on Zimbabwe's premier marketplace.">
             <meta name="keywords" content="seller login Zimbabwe, agricultural marketplace login, Musika Wedu login, farmer login Zimbabwe">
             <link rel="canonical" href="https://musikawedu.co.zw/login">

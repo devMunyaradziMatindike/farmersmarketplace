@@ -60,7 +60,7 @@ return [
     ],
     
     'default_meta' => [
-        'title' => 'Musika Wedu - Zimbabwe\'s Premier Agricultural Marketplace',
+        'title' => '🌾 Musika Wedu - todye tichiguta',
         'description' => 'Connect with farmers across Zimbabwe. Buy and sell crops, livestock, equipment, and agricultural products on Zimbabwe\'s leading agricultural marketplace.',
         'keywords' => 'agricultural marketplace Zimbabwe, farmers Zimbabwe, crops Zimbabwe, livestock Zimbabwe, agricultural equipment Zimbabwe, Musika Wedu',
         'image' => 'https://musikawedu.co.zw/images/musika-wedu-default.jpg'

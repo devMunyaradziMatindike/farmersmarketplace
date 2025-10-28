@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <title>{{ getPageTitle() }} - Musika Wedu | Zimbabwe Agricultural Marketplace</title>
+        <title>{{ getPageTitle() }} - 🌾 Musika Wedu | todye tichiguta</title>
         <meta name="description" :content="getPageDescription()">
         <meta name="keywords" :content="getPageKeywords()">
         <link rel="canonical" :href="getCanonicalUrl()">

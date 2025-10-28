@@ -6,7 +6,7 @@ import { Head, Link } from '@inertiajs/vue3';
 <template>
     <GuestLayout>
         <Head>
-            <title>Join Musika Wedu as a Seller - Zimbabwe Agricultural Marketplace</title>
+            <title>Join 🌾 Musika Wedu as a Seller - todye tichiguta</title>
             <meta name="description" content="Join Musika Wedu as a seller and start selling your agricultural products. Connect with buyers across Zimbabwe on our premier agricultural marketplace.">
             <meta name="keywords" content="become seller Zimbabwe, agricultural marketplace registration, Musika Wedu seller, farmer registration Zimbabwe">
             <link rel="canonical" href="https://musikawedu.co.zw/register">

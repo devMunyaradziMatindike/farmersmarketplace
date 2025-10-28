@@ -29,7 +29,7 @@ const showSellerFeatures = computed(() => isSeller.value || isAdmin.value);
 
 <template>
     <Head>
-        <title>Dashboard - Musika Wedu | Zimbabwe Agricultural Marketplace</title>
+        <title>Dashboard - 🌾 Musika Wedu | todye tichiguta</title>
         <meta name="description" content="Access your Musika Wedu dashboard. Manage your agricultural products, track sales, and grow your business on Zimbabwe's premier marketplace.">
         <meta name="robots" content="noindex, nofollow">
     </Head>

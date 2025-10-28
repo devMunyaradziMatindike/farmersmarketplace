@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
         
         <!-- SEO Meta Tags -->
-        <title>{{ config('app.name', 'Musika Wedu') }} - Zimbabwe's Premier Agricultural Marketplace</title>
+        <title>🌾 Musika Wedu - todye tichiguta</title>
         <meta name="description" content="Musika Wedu is Zimbabwe's leading agricultural marketplace connecting farmers, suppliers, and buyers. Buy and sell crops, livestock, equipment, and agricultural products across Zimbabwe.">
         <meta name="keywords" content="agricultural marketplace Zimbabwe, farmers Zimbabwe, crops Zimbabwe, livestock Zimbabwe, agricultural equipment Zimbabwe, Musika Wedu, farming Zimbabwe, agricultural products Zimbabwe">
         <meta name="author" content="Nesso Systems (Pvt) Ltd">
@@ -15,7 +15,7 @@
         
         <!-- Open Graph Meta Tags (Facebook, WhatsApp, etc.) -->
         <meta property="og:type" content="website">
-        <meta property="og:title" content="Musika Wedu - Zimbabwe's Premier Agricultural Marketplace">
+        <meta property="og:title" content="🌾 Musika Wedu - todye tichiguta">
         <meta property="og:description" content="Connect with farmers across Zimbabwe. Buy and sell crops, livestock, equipment, and agricultural products on Zimbabwe's leading agricultural marketplace.">
         <meta property="og:url" content="https://musikawedu.co.zw">
         <meta property="og:site_name" content="Musika Wedu">
@@ -27,7 +27,7 @@
         
         <!-- Twitter Card Meta Tags -->
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Musika Wedu - Zimbabwe's Premier Agricultural Marketplace">
+        <meta name="twitter:title" content="🌾 Musika Wedu - todye tichiguta">
         <meta name="twitter:description" content="Connect with farmers across Zimbabwe. Buy and sell crops, livestock, equipment, and agricultural products.">
         <meta name="twitter:image" content="https://musikawedu.co.zw/images/musika-wedu-twitter-card.jpg">
         <meta name="twitter:image:alt" content="Musika Wedu Agricultural Marketplace">
