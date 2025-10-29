@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="min-h-screen bg-gray-50 dark:bg-gray-900 mobile-nav-spacing">
         <Head>
             <title>Market Commodity Pricing - 🌾 Musika Wedu</title>
             <meta name="description" content="Real-time agricultural commodity prices across Zimbabwe with comparisons by province, town, and city." />
