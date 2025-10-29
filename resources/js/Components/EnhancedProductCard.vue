@@ -57,12 +57,16 @@
 
                     <!-- Price Section -->
                     <div class="mb-2">
-                        <div class="text-lg font-bold text-gray-900 dark:text-white">
-                            {{ product.currency === 'USD' ? '$' : 'ZWG$' }}{{ parseFloat(product.price).toFixed(2) }}
+                        <div :class="[
+                            'text-lg text-gray-900 dark:text-white',
+                            product.currency === 'USD' ? 'font-bold' : 'font-semibold'
+                        ]">
+                            <span v-if="product.currency === 'USD'">$</span>
+                            <span v-else>ZWG </span>{{ parseFloat(product.price).toFixed(2) }}
                         </div>
                         <!-- Converted Price -->
                         <div v-if="product.currency && product.currency_rate" class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                            ≈ {{ product.currency === 'USD' ? 'ZWG$' : '$' }}{{ product.converted_price }}
+                            ≈ <span v-if="product.currency === 'USD'">ZWG </span><span v-else>$</span>{{ product.converted_price }}
                         </div>
                     </div>
 
@@ -143,13 +147,17 @@
                 <div class="flex items-end justify-between mb-3">
                     <div class="flex-1">
                         <!-- Primary Price -->
-                        <div class="text-lg sm:text-2xl font-bold text-primary-600 dark:text-primary-400">
-                            {{ product.currency === 'USD' ? '$' : 'ZWG$' }}{{ parseFloat(product.price).toFixed(2) }}
+                        <div :class="[
+                            'text-lg sm:text-2xl text-primary-600 dark:text-primary-400',
+                            product.currency === 'USD' ? 'font-bold' : 'font-semibold'
+                        ]">
+                            <span v-if="product.currency === 'USD'">$</span>
+                            <span v-else>ZWG </span>{{ parseFloat(product.price).toFixed(2) }}
                             <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 ml-1">{{ product.currency || 'USD' }}</span>
                         </div>
                         <!-- Converted Price -->
                         <div v-if="product.currency && product.currency_rate" class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
-                            ≈ {{ product.currency === 'USD' ? 'ZWG$' : '$' }}{{ product.converted_price }}
+                            ≈ <span v-if="product.currency === 'USD'">ZWG </span><span v-else>$</span>{{ product.converted_price }}
                         </div>
                         <div class="text-xs text-gray-500 dark:text-gray-400 flex items-center mt-1">
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
