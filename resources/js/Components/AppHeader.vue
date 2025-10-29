@@ -24,12 +24,13 @@
                 <div class="flex items-center gap-2 sm:gap-4">
                     <Link
                         :href="route('market.pricing')"
-                        class="hidden sm:inline-flex items-center gap-2 px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition touch-manipulation"
+                        class="inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition touch-manipulation min-h-[44px] min-w-[44px] justify-center"
                     >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
-                        <span>Market Pricing</span>
+                        <span class="hidden xs:inline">Market Pricing</span>
+                        <span class="xs:hidden">Pricing</span>
                     </Link>
                     <!-- Dark Mode Toggle -->
                     <button
@@ -101,6 +102,83 @@
             </div>
         </div>
     </header>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50 safe-area-pb">
+        <div class="flex items-center justify-around py-1">
+            <!-- Home -->
+            <Link 
+                :href="route('home')" 
+                class="flex flex-col items-center gap-1 p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors min-h-[60px] justify-center"
+                :class="{ 'text-primary-600 dark:text-primary-400': route().current('home') }"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span class="text-xs font-medium">Home</span>
+            </Link>
+            
+            <!-- Market Pricing -->
+            <Link 
+                :href="route('market.pricing')" 
+                class="flex flex-col items-center gap-1 p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors min-h-[60px] justify-center"
+                :class="{ 'text-primary-600 dark:text-primary-400': route().current('market.pricing') }"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <span class="text-xs font-medium">Pricing</span>
+            </Link>
+            
+            <!-- Products -->
+            <Link 
+                :href="route('products.index')" 
+                class="flex flex-col items-center gap-1 p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors min-h-[60px] justify-center"
+                :class="{ 'text-primary-600 dark:text-primary-400': route().current('products.*') }"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+                <span class="text-xs font-medium">Products</span>
+            </Link>
+            
+            <!-- Sell/Register -->
+            <Link 
+                :href="route('register')" 
+                class="flex flex-col items-center gap-1 p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors min-h-[60px] justify-center"
+                :class="{ 'text-primary-600 dark:text-primary-400': route().current('register') }"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span class="text-xs font-medium">Sell</span>
+            </Link>
+            
+            <!-- Profile/Login -->
+            <Link 
+                v-if="$page.props.auth.user"
+                :href="route('dashboard')" 
+                class="flex flex-col items-center gap-1 p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors min-h-[60px] justify-center"
+                :class="{ 'text-primary-600 dark:text-primary-400': route().current('dashboard') }"
+            >
+                <div class="w-5 h-5 bg-primary-600 text-white rounded-full flex items-center justify-center font-semibold text-xs">
+                    {{ $page.props.auth.user.name[0].toUpperCase() }}
+                </div>
+                <span class="text-xs font-medium">Profile</span>
+            </Link>
+            <Link 
+                v-else
+                :href="route('login')" 
+                class="flex flex-col items-center gap-1 p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors min-h-[60px] justify-center"
+                :class="{ 'text-primary-600 dark:text-primary-400': route().current('login') }"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span class="text-xs font-medium">Login</span>
+            </Link>
+        </div>
+    </nav>
 </template>
 
 <script setup>

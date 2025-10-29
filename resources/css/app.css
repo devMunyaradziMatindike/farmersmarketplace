@@ -23,6 +23,22 @@
   .safe-area-inset-right {
     padding-right: env(safe-area-inset-right);
   }
+  
+  /* Mobile bottom navigation spacing */
+  .mobile-nav-spacing {
+    padding-bottom: 80px; /* Height of bottom nav + safe area */
+  }
+  
+  /* Touch-friendly minimum sizes */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent zoom on iOS inputs */
+  .no-zoom {
+    font-size: 16px;
+  }
 }
 
 /* Mobile-first responsive text */
@@ -50,5 +66,24 @@
   
   .mobile-input {
     @apply px-3 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  }
+  
+  /* Mobile navigation styles */
+  .mobile-nav-item {
+    @apply flex flex-col items-center gap-1 p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors min-h-[60px] justify-center;
+  }
+  
+  .mobile-nav-item.active {
+    @apply text-primary-600 dark:text-primary-400;
+  }
+  
+  /* Mobile-friendly buttons */
+  .mobile-btn {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-colors touch-manipulation;
+  }
+  
+  /* Mobile search bar */
+  .mobile-search {
+    @apply w-full px-4 py-3 text-base rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent;
   }
 }

@@ -14,7 +14,7 @@
         <!-- Structured Data will be injected via document head -->
     </Head>
 
-    <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="min-h-screen bg-gray-50 dark:bg-gray-900 mobile-nav-spacing">
         <!-- Header -->
         <AppHeader :filters="filters" />
 
