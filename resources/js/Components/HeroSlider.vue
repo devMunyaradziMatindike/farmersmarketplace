@@ -52,9 +52,9 @@
                 
                 <!-- Content -->
                 <div class="relative z-10 h-full flex items-center justify-center">
-                    <div class="text-center text-white max-w-4xl mx-auto px-4">
+                    <div class="text-center text-white max-w-4xl mx-auto px-2 sm:px-4">
                         <!-- Main Title -->
-                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold mb-4 tracking-tight brand-name-white">
+                        <h1 class="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 tracking-tight brand-name-white break-words whitespace-normal">
                             MUSIKA WEDU
                         </h1>
                         
