@@ -86,6 +86,7 @@
                             </div>
                             <div class="text-right">
                                 <div class="text-xl font-bold text-green-700 dark:text-green-400">${{ row.price.toFixed(2) }}</div>
+                                <div class="text-2xl font-bold text-green-800 dark:text-green-500 mt-1">{{ formatZWGPrice(row.price) }}</div>
                                 <div class="text-xs text-gray-500">{{ row.unit }}</div>
                             </div>
                         </div>
@@ -102,6 +103,7 @@
                             </div>
                             <div class="text-right">
                                 <div class="text-xl font-bold text-blue-700 dark:text-blue-400">${{ row.price.toFixed(2) }}</div>
+                                <div class="text-2xl font-bold text-blue-800 dark:text-blue-500 mt-1">{{ formatZWGPrice(row.price) }}</div>
                                 <div class="text-xs text-gray-500">{{ row.unit }}</div>
                             </div>
                         </div>
@@ -128,6 +130,7 @@
                                 <th class="text-left px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-300">Market</th>
                                 <th class="text-left px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-300">Province</th>
                                 <th class="text-left px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-300">Price (USD)</th>
+                                <th class="text-left px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-300">Price (ZWG)</th>
                                 <th class="text-left px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-300">Unit</th>
                                 <th class="text-left px-6 py-3 text-xs font-medium text-gray-600 dark:text-gray-300">Trend</th>
                             </tr>
@@ -138,6 +141,11 @@
                                 <td class="px-6 py-3 text-gray-700 dark:text-gray-300">{{ row.market }}</td>
                                 <td class="px-6 py-3 text-gray-700 dark:text-gray-300">{{ row.province }}</td>
                                 <td class="px-6 py-3 text-gray-900 dark:text-white font-semibold">${{ row.price.toFixed(2) }}</td>
+                                <td class="px-6 py-3">
+                                    <span class="text-xl sm:text-2xl font-bold text-primary-600 dark:text-primary-400">
+                                        {{ formatZWGPrice(row.price) }}
+                                    </span>
+                                </td>
                                 <td class="px-6 py-3 text-gray-700 dark:text-gray-300">{{ row.unit }}</td>
                                 <td class="px-6 py-3">
                                     <span :class="trendClass(row.trend)" class="px-2 py-1 rounded-full text-xs font-medium">
@@ -161,6 +169,13 @@
 import { ref, computed, onMounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import AppHeader from '@/Components/AppHeader.vue';
+
+const props = defineProps({
+    exchangeRate: {
+        type: Number,
+        default: 1.0
+    }
+});
 
 const prices = ref([]);
 const loading = ref(false);
@@ -193,6 +208,16 @@ const filtered = computed(() => {
 
 const topPrices = computed(() => [...filtered.value].sort((a, b) => b.price - a.price).slice(0, 5));
 const bestDeals = computed(() => [...filtered.value].sort((a, b) => a.price - b.price).slice(0, 5));
+
+// Convert USD price to ZWG
+const convertToZWG = (usdPrice) => {
+    return Math.round(usdPrice * props.exchangeRate);
+};
+
+// Format ZWG price display: (≈) ZWG 500
+const formatZWGPrice = (usdPrice) => {
+    return `(≈) ZWG ${convertToZWG(usdPrice).toLocaleString()}`;
+};
 
 const trendClass = (t) => t === 'up' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' : (t === 'down' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300');
 const trendIcon = (t) => t === 'up' ? '↗️' : (t === 'down' ? '↘️' : '→');

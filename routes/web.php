@@ -44,7 +44,10 @@ Route::get('/products/{product}', [ProductController::class, 'show'])->name('pro
 
 // Market Pricing Page (Public)
 Route::get('/market-pricing', function () {
-    return Inertia::render('MarketPricing');
+    $currencySettings = \App\Models\CurrencySetting::current();
+    return Inertia::render('MarketPricing', [
+        'exchangeRate' => $currencySettings?->zwg_to_usd_rate ?? 1.0
+    ]);
 })->name('market.pricing');
 
 // Registration Options Page (Public)
