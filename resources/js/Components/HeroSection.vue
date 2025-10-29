@@ -1,9 +1,9 @@
 <template>
     <div class="relative">
-        <!-- Use the new Hero Slider -->
-        <HeroSlider />
+        <!-- Use the Modern Hero with Slanted Cards -->
+        <ModernHero :slides="heroSlides" />
         
-        <!-- Statistics Section (below slider) -->
+        <!-- Statistics Section (below hero) -->
         <div class="bg-white dark:bg-gray-800 py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -102,7 +102,8 @@
 </template>
 
 <script setup>
-import HeroSlider from './HeroSlider.vue'
+import { ref } from 'vue'
+import ModernHero from './ModernHero.vue'
 import { Link } from '@inertiajs/vue3'
 
 defineProps({
@@ -111,4 +112,88 @@ defineProps({
         required: true
     }
 })
+
+// Hero slides data
+const heroSlides = ref([
+    {
+        image: '/farm/maize-field.jpg',
+        fallback: '/images/placeholder-hero.svg',
+        objectPosition: 'center 35%',
+        subtitle: 'Zimbabwe\'s Premier Agricultural Marketplace',
+        advertising: '🌾 Fresh Maize Direct from Farm',
+        description: 'Connect with local farmers for the freshest maize and grains',
+        cta1: 'Buy Fresh Maize',
+        cta2: 'Find Local Farmers'
+    },
+    {
+        image: '/farm/tractor.jpg',
+        objectPosition: 'center 40%',
+        fallback: '/images/placeholder-hero.svg',
+        subtitle: 'Professional Farm Equipment',
+        advertising: '🚜 Hire a Tractor Today',
+        description: 'Rent tractors, combines, and farm machinery from verified owners',
+        cta1: 'Rent Equipment',
+        cta2: 'List Your Tractor'
+    },
+    {
+        image: '/farm/combine-harvester.jpg',
+        objectPosition: 'center 30%',
+        fallback: '/images/placeholder-hero.svg',
+        subtitle: 'Modern Harvesting Solutions',
+        advertising: '🌾 Combine Harvester Services Available',
+        description: 'Professional harvesting services for your crops',
+        cta1: 'Book Harvesting',
+        cta2: 'Offer Services'
+    },
+    {
+        image: '/farm/planter.jpg',
+        objectPosition: 'center 35%',
+        fallback: '/images/placeholder-hero.svg',
+        subtitle: 'Precision Planting Equipment',
+        advertising: '🌱 Precision Planters for Hire',
+        description: 'Modern planting equipment for efficient crop establishment',
+        cta1: 'Rent Planter',
+        cta2: 'List Equipment'
+    },
+    {
+        image: '/farm/pivot-irrigation.jpg',
+        objectPosition: 'center 40%',
+        fallback: '/images/placeholder-hero.svg',
+        subtitle: 'Smart Irrigation Systems',
+        advertising: '💧 Pivot Irrigation Solutions',
+        description: 'Efficient water management for optimal crop growth',
+        cta1: 'Get Irrigation',
+        cta2: 'Install System'
+    },
+    {
+        image: '/farm/cattle.jpg',
+        objectPosition: 'center 35%',
+        fallback: '/images/placeholder-hero.svg',
+        subtitle: 'Quality Livestock',
+        advertising: '🐄 Premium Cattle for Sale',
+        description: 'Healthy, well-bred cattle from trusted farmers',
+        cta1: 'Buy Cattle',
+        cta2: 'Sell Livestock'
+    },
+    {
+        image: '/farm/sheep.jpg',
+        objectPosition: 'center 45%',
+        fallback: '/images/placeholder-hero.svg',
+        subtitle: 'Sheep & Goat Farming',
+        advertising: '🐑 Quality Sheep & Goats',
+        description: 'Healthy sheep and goats from local breeders',
+        cta1: 'Buy Sheep',
+        cta2: 'List Animals'
+    },
+    {
+        image: '/farm/goats.jpg',
+        objectPosition: 'center 45%',
+        fallback: '/images/placeholder-hero.svg',
+        subtitle: 'Goat Farming Excellence',
+        advertising: '🐐 Premium Goats Available',
+        description: 'Quality goats for breeding, meat, or dairy production',
+        cta1: 'Buy Goats',
+        cta2: 'Sell Goats'
+    }
+])
 </script>
