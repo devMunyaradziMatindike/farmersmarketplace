@@ -1,5 +1,5 @@
 <template>
-    <div class="relative h-[70vh] overflow-hidden">
+    <div class="relative h-[55vh] sm:h-[60vh] md:h-[70vh] lg:h-[75vh] overflow-hidden">
         <!-- Slider Container -->
         <div class="relative w-full h-full">
             <div 
@@ -14,81 +14,84 @@
                             : 'translate-x-full opacity-0'
                 ]"
             >
-                <!-- Background Image -->
+                <!-- Background Image (responsive) -->
                 <div class="absolute inset-0">
-                    <img 
-                        :src="slide.image" 
-                        :alt="slide.subtitle"
-                        class="w-full h-full object-cover transition-all duration-1000"
-                        @error="handleImageError($event, index)"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                    />
+                    <picture>
+                        <source v-if="slide.imageWebp" :srcset="slide.imageWebp" type="image/webp" />
+                        <img 
+                            :src="slide.image"
+                            :srcset="slide.srcset || ''"
+                            sizes="(max-width: 640px) 100vw, 100vw"
+                            :alt="slide.subtitle"
+                            class="w-full h-full object-cover transition-all duration-1000"
+                            :style="{ objectPosition: slide.objectPosition || 'center center' }"
+                            :loading="index === 0 ? 'eager' : 'lazy'"
+                            decoding="async"
+                            @error="handleImageError($event, index)"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        />
+                    </picture>
                     <!-- Fallback content if image fails to load -->
                     <div 
                         class="absolute inset-0 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center"
                         style="display: none;"
                     >
                         <div class="text-center text-white">
-                            <div class="text-6xl mb-4">🌾</div>
-                            <h3 class="text-2xl font-bold mb-2">{{ slide.subtitle }}</h3>
-                            <p class="text-lg opacity-90">{{ slide.advertising }}</p>
+                            <div class="text-5xl sm:text-6xl mb-3">🌾</div>
+                            <h3 class="text-xl sm:text-2xl font-bold mb-2">{{ slide.subtitle }}</h3>
+                            <p class="text-base sm:text-lg opacity-90">{{ slide.advertising }}</p>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Overlay -->
-                <div class="absolute inset-0 bg-black/40"></div>
+
+                <!-- Overlay with bottom gradient for legibility -->
+                <div class="absolute inset-0">
+                    <div class="absolute inset-0 bg-black/35"></div>
+                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                </div>
                 
                 <!-- Content -->
                 <div class="relative z-10 h-full flex items-center justify-center">
                     <div class="text-center text-white max-w-4xl mx-auto px-4">
                         <!-- Main Title -->
-                        <h1 class="text-6xl md:text-8xl font-bold mb-6 brand-name-white">
+                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold mb-4 tracking-tight brand-name-white">
                             MUSIKA WEDU
                         </h1>
                         
                         <!-- Subtitle -->
-                        <p class="text-2xl md:text-3xl mb-4 font-light">
+                        <p class="text-lg sm:text-2xl mb-4 font-light">
                             {{ slide.subtitle }}
                         </p>
                         
                         <!-- Advertising Statement -->
-                        <div class="bg-white/20 backdrop-blur-sm rounded-2xl p-6 mb-8 max-w-2xl mx-auto">
-                            <p class="text-xl md:text-2xl font-semibold mb-4">
+                        <div class="bg-white/15 sm:bg-white/20 backdrop-blur-sm rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 max-w-2xl mx-auto">
+                            <p class="text-base sm:text-xl md:text-2xl font-semibold mb-2 sm:mb-3">
                                 {{ slide.advertising }}
                             </p>
-                            <p class="text-lg opacity-90">
+                            <p class="text-sm sm:text-lg opacity-90">
                                 {{ slide.description }}
                             </p>
                         </div>
                         
                         <!-- CTA Buttons -->
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8">
                             <Link 
                                 :href="getCta1Link(slide)"
-                                class="bg-white text-primary-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary-50 transition-colors duration-300 flex items-center justify-center gap-2"
+                                class="mobile-btn bg-white text-primary-600 hover:bg-primary-50"
                             >
-                                <span>🛒</span>
-                                {{ slide.cta1 }}
+                                🛒 {{ slide.cta1 }}
                             </Link>
                             <Link 
                                 :href="getCta2Link(slide)"
-                                class="bg-primary-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary-700 transition-colors duration-300 flex items-center justify-center gap-2"
+                                class="mobile-btn bg-primary-600 text-white hover:bg-primary-700"
                             >
-                                <span>📱</span>
-                                {{ slide.cta2 }}
+                                📱 {{ slide.cta2 }}
                             </Link>
                         </div>
 
                         <!-- Buyer Information -->
-                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 max-w-xl mx-auto">
-                            <div class="flex items-center justify-center gap-2 mb-2">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                                </svg>
-                                <span class="text-white font-semibold">For Buyers</span>
-                            </div>
-                            <p class="text-white/90 text-sm">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4 max-w-xl mx-auto">
+                            <p class="text-white/90 text-xs sm:text-sm">
                                 ✅ No registration required • Browse freely • Contact sellers directly
                             </p>
                         </div>
@@ -143,7 +146,9 @@ const autoSlideInterval = ref(null)
 const slides = ref([
     {
         image: '/farm/maize-field.jpg',
+        // srcset: '/farm/maize-field-640.jpg 640w, /farm/maize-field-1280.jpg 1280w, /farm/maize-field.jpg 1920w',
         fallback: '/images/placeholder-hero.svg',
+        objectPosition: 'center 35%',
         subtitle: 'Zimbabwe\'s Premier Agricultural Marketplace',
         advertising: '🌾 Fresh Maize Direct from Farm',
         description: 'Connect with local farmers for the freshest maize and grains',
@@ -152,6 +157,7 @@ const slides = ref([
     },
     {
         image: '/farm/tractor.jpg',
+        objectPosition: 'center 40%',
         fallback: '/images/placeholder-hero.svg',
         subtitle: 'Professional Farm Equipment',
         advertising: '🚜 Hire a Tractor Today',
@@ -161,6 +167,7 @@ const slides = ref([
     },
     {
         image: '/farm/combine-harvester.jpg',
+        objectPosition: 'center 30%',
         fallback: '/images/placeholder-hero.svg',
         subtitle: 'Modern Harvesting Solutions',
         advertising: '🌾 Combine Harvester Services Available',
@@ -170,6 +177,7 @@ const slides = ref([
     },
     {
         image: '/farm/planter.jpg',
+        objectPosition: 'center 35%',
         fallback: '/images/placeholder-hero.svg',
         subtitle: 'Precision Planting Equipment',
         advertising: '🌱 Precision Planters for Hire',
@@ -179,6 +187,7 @@ const slides = ref([
     },
     {
         image: '/farm/pivot-irrigation.jpg',
+        objectPosition: 'center 40%',
         fallback: '/images/placeholder-hero.svg',
         subtitle: 'Smart Irrigation Systems',
         advertising: '💧 Pivot Irrigation Solutions',
@@ -188,6 +197,7 @@ const slides = ref([
     },
     {
         image: '/farm/cattle.jpg',
+        objectPosition: 'center 35%',
         fallback: '/images/placeholder-hero.svg',
         subtitle: 'Quality Livestock',
         advertising: '🐄 Premium Cattle for Sale',
@@ -197,6 +207,7 @@ const slides = ref([
     },
     {
         image: '/farm/sheep.jpg',
+        objectPosition: 'center 45%',
         fallback: '/images/placeholder-hero.svg',
         subtitle: 'Sheep & Goat Farming',
         advertising: '🐑 Quality Sheep & Goats',
@@ -206,6 +217,7 @@ const slides = ref([
     },
     {
         image: '/farm/goats.jpg',
+        objectPosition: 'center 45%',
         fallback: '/images/placeholder-hero.svg',
         subtitle: 'Goat Farming Excellence',
         advertising: '🐐 Premium Goats Available',
