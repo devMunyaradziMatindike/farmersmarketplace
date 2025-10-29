@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
         <!-- Use the Modern Hero with Slanted Cards -->
-        <ModernHero :slides="heroSlides" :stats="stats" />
+        <ModernHero :slides="heroSlides" />
         
         <!-- Statistics Section (below hero) -->
         <div class="bg-white dark:bg-gray-800 py-12">
@@ -186,14 +186,14 @@ const heroSlides = ref([
         cta2: 'List Animals'
     },
     {
-        image: '/farm/goats.jpg',
-        objectPosition: 'center 45%',
+        image: '/farm/maize-field.jpg',
+        objectPosition: 'center 35%',
         fallback: '/images/placeholder-hero.svg',
-        subtitle: 'Goat Farming Excellence',
-        advertising: '🐐 Premium Goats Available',
-        description: 'Quality goats for breeding, meat, or dairy production',
-        cta1: 'Buy Goats',
-        cta2: 'Sell Goats'
+        subtitle: 'Fresh Maize & Grains',
+        advertising: '🌾 Fresh Maize Direct from Farm',
+        description: 'Connect with local farmers for the freshest maize and grains',
+        cta1: 'Buy Fresh Maize',
+        cta2: 'Find Local Farmers'
     }
 ])
 </script>
