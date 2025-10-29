@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
         <!-- Use the Modern Hero with Slanted Cards -->
-        <ModernHero :slides="heroSlides" />
+        <ModernHero :slides="heroSlides" :stats="stats" />
         
         <!-- Statistics Section (below hero) -->
         <div class="bg-white dark:bg-gray-800 py-12">
