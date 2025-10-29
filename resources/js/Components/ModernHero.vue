@@ -13,17 +13,49 @@
                     </p>
                 </div>
 
-                <!-- Cards Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+                <!-- Mobile Layout: Amazon-style 2x2 Grid -->
+                <div class="md:hidden">
+                    <div class="grid grid-cols-2 gap-3">
+                        <Link 
+                            v-for="(slide, index) in slides" 
+                            :key="index"
+                            :href="getCta1Link(slide)"
+                            class="group block"
+                        >
+                            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+                                <!-- Large Image -->
+                                <div class="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
+                                    <img 
+                                        :src="slide.image"
+                                        :alt="slide.subtitle"
+                                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        :style="{ objectPosition: slide.objectPosition || 'center center' }"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                </div>
+                                <!-- Category Label -->
+                                <div class="p-3 text-center">
+                                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white line-clamp-1">
+                                        {{ slide.subtitle }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+
+                <!-- Desktop Layout: Slanted Cards (Original) -->
+                <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                     <div 
                         v-for="(slide, index) in slides" 
                         :key="index"
-                        class="group relative sm:transform sm:transition-transform sm:duration-300 sm:hover:scale-105 sm:hover:z-50"
+                        class="group relative transform transition-transform duration-300 hover:scale-105 hover:z-50"
                         :class="getCardRotationClass(index)"
                         :style="getCardZIndex(index)"
                     >
                         <!-- Card -->
-                        <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden h-64 sm:h-72 lg:h-80 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:z-20">
+                        <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden h-72 lg:h-80 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:z-20">
                             <!-- Card Image -->
                             <div class="absolute inset-0">
                                 <img 
@@ -39,19 +71,19 @@
                             
                             <!-- Card Content (inverse rotation for readability) -->
                             <div 
-                                class="relative h-full flex flex-col justify-end p-3 sm:p-4 lg:p-6 text-white"
+                                class="relative h-full flex flex-col justify-end p-4 lg:p-6 text-white"
                                 :class="getInverseRotationClass(index)"
                             >
-                                <div class="text-xl sm:text-2xl lg:text-3xl mb-2">{{ slide.advertising.split(' ')[0] }}</div>
-                                <h3 class="text-base sm:text-lg font-bold mb-2 line-clamp-2">
+                                <div class="text-xl lg:text-2xl mb-2">{{ slide.advertising.split(' ')[0] }}</div>
+                                <h3 class="text-base lg:text-lg font-bold mb-2 line-clamp-2">
                                     {{ slide.subtitle }}
                                 </h3>
-                                <p class="text-xs sm:text-sm opacity-90 mb-4 line-clamp-2">
+                                <p class="text-xs lg:text-sm opacity-90 mb-4 line-clamp-2">
                                     {{ slide.description }}
                                 </p>
                                 <Link 
                                     :href="getCta1Link(slide)"
-                                    class="inline-block bg-white text-primary-600 px-4 py-2.5 sm:py-2 rounded-lg text-sm font-semibold hover:bg-primary-50 transition-colors transform group-hover:scale-105 min-h-[44px] flex items-center justify-center"
+                                    class="inline-block bg-white text-primary-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary-50 transition-colors transform group-hover:scale-105 min-h-[44px] flex items-center justify-center"
                                 >
                                     {{ slide.cta1 }}
                                 </Link>
@@ -74,27 +106,27 @@ const props = defineProps({
     }
 })
 
-// Generate rotation patterns (-6 to +6 degrees) mapped to Tailwind classes
+// Generate rotation patterns (-6 to +6 degrees) mapped to Tailwind classes (desktop only)
 const rotationClasses = [
-    'sm:-rotate-[5deg]',   // -5 degrees
-    'sm:rotate-[4deg]',   // 4 degrees
-    'sm:-rotate-[6deg]',  // -6 degrees
-    'sm:rotate-[3deg]',   // 3 degrees
-    'sm:-rotate-[4deg]',  // -4 degrees
-    'sm:rotate-[5deg]',   // 5 degrees
-    'sm:-rotate-[3deg]',  // -3 degrees
-    'sm:rotate-[6deg]'    // 6 degrees
+    'rotate-[5deg]',   // -5 degrees
+    '-rotate-[4deg]',   // 4 degrees
+    'rotate-[6deg]',  // -6 degrees
+    '-rotate-[3deg]',   // 3 degrees
+    'rotate-[4deg]',  // -4 degrees
+    '-rotate-[5deg]',   // 5 degrees
+    'rotate-[3deg]',  // -3 degrees
+    '-rotate-[6deg]'    // 6 degrees
 ]
 
 const inverseRotationClasses = [
-    'sm:rotate-[5deg]',   // inverse of -5
-    'sm:-rotate-[4deg]',  // inverse of 4
-    'sm:rotate-[6deg]',   // inverse of -6
-    'sm:-rotate-[3deg]',  // inverse of 3
-    'sm:rotate-[4deg]',   // inverse of -4
-    'sm:-rotate-[5deg]',  // inverse of 5
-    'sm:rotate-[3deg]',   // inverse of -3
-    'sm:-rotate-[6deg]'   // inverse of 6
+    '-rotate-[5deg]',   // inverse of -5
+    'rotate-[4deg]',  // inverse of 4
+    '-rotate-[6deg]',   // inverse of -6
+    'rotate-[3deg]',  // inverse of 3
+    '-rotate-[4deg]',   // inverse of -4
+    'rotate-[5deg]',  // inverse of 5
+    '-rotate-[3deg]',   // inverse of -3
+    'rotate-[6deg]'   // inverse of 6
 ]
 
 // Get card rotation class (only on desktop)
@@ -148,22 +180,6 @@ function getCta2Link(slide) {
 /* Smooth hover transitions for cards */
 .group:hover {
     transition: transform 0.3s ease, z-index 0.3s ease;
-}
-
-/* Ensure no rotation on mobile devices */
-@media (max-width: 640px) {
-    .group {
-        transform: none !important;
-    }
-    
-    .group > div > div[class*="rotate"] {
-        transform: none !important;
-    }
-    
-    /* Ensure text is not rotated on mobile */
-    [class*="rotate"] {
-        transform: none !important;
-    }
 }
 </style>
 
