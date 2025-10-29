@@ -1,6 +1,92 @@
 <template>
     <Link :href="route('products.show', product.id)" class="block group">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <!-- Mobile Layout: Horizontal (Amazon-style) -->
+        <div class="md:hidden bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div class="flex gap-3 p-3">
+                <!-- Product Image (Left) -->
+                <div class="relative w-32 sm:w-36 flex-shrink-0 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden aspect-square">
+                    <img
+                        :src="product.photos?.[0]?.photo_url || '/images/placeholder.svg'"
+                        :alt="product.name"
+                        class="w-full h-full object-cover"
+                    />
+                    
+                    <!-- Status Badge (Top Left) -->
+                    <div class="absolute top-1 left-1">
+                        <span
+                            v-if="product.status === 'available'"
+                            class="px-1.5 py-0.5 bg-green-500 text-white text-[10px] font-semibold rounded-full"
+                        >
+                            Available
+                        </span>
+                        <span
+                            v-else-if="product.status === 'sold_out'"
+                            class="px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-semibold rounded-full"
+                        >
+                            Sold Out
+                        </span>
+                    </div>
+
+                    <!-- Image Gallery Indicator -->
+                    <div v-if="product.photos && product.photos.length > 1" class="absolute bottom-1 left-1 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
+                            <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        </svg>
+                        {{ product.photos.length }}
+                    </div>
+                </div>
+
+                <!-- Product Details (Right) -->
+                <div class="flex-1 flex flex-col min-w-0">
+                    <!-- Product Name -->
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-1 line-clamp-2 leading-tight">
+                        {{ product.name }}
+                    </h3>
+                    
+                    <!-- Category/Seller Info -->
+                    <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                        <span class="text-xs text-gray-500 dark:text-gray-400">
+                            {{ product.category?.name }}
+                        </span>
+                        <span v-if="product.user?.name" class="text-xs text-gray-400 dark:text-gray-500">•</span>
+                        <span v-if="product.user?.name" class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                            {{ product.user.name }}
+                        </span>
+                    </div>
+
+                    <!-- Price Section -->
+                    <div class="mb-2">
+                        <div class="text-lg font-bold text-gray-900 dark:text-white">
+                            {{ product.currency === 'USD' ? '$' : 'ZWG$' }}{{ parseFloat(product.price).toFixed(2) }}
+                        </div>
+                        <!-- Converted Price -->
+                        <div v-if="product.currency && product.currency_rate" class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                            ≈ {{ product.currency === 'USD' ? 'ZWG$' : '$' }}{{ product.converted_price }}
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div v-if="product.location" class="flex items-center gap-1 mb-3 text-xs text-gray-500 dark:text-gray-400">
+                        <svg class="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="truncate">{{ product.location }}</span>
+                    </div>
+
+                    <!-- See Options Button -->
+                    <button 
+                        class="w-full py-2.5 px-4 bg-gray-900 dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2 touch-manipulation mt-auto"
+                        @click.prevent="contactSeller"
+                    >
+                        See options
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Layout: Vertical Card (Original) -->
+        <div class="hidden md:block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-xl transition-all duration-300 overflow-hidden">
             <!-- Product Image -->
             <div class="relative aspect-[4/3] sm:aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
                 <img
@@ -119,9 +205,6 @@ const truncateLocation = (location) => {
 };
 
 const contactSeller = () => {
-    // This will be prevented by @click.prevent on the Link
     window.location.href = route('products.show', props.product.id);
 };
 </script>
-
-
