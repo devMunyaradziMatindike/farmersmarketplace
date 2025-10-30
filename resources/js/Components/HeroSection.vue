@@ -48,11 +48,11 @@
                     </p>
                 </div>
 
-                <!-- Mobile-only Benefits: Horizontal Snap Cards -->
-                <div class="md:hidden -mx-4 px-4 py-6 bg-gradient-to-b from-transparent to-blue-950/10 dark:to-blue-900/20">
-                    <div ref="benefitsCarousel" @scroll="updateBenefitIndex" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+                <!-- Mobile-only Benefits: Stacked Cards (no sliding) -->
+                <div class="md:hidden px-4 py-6 bg-gradient-to-b from-transparent to-blue-950/10 dark:to-blue-900/20">
+                    <div class="space-y-4">
                         <!-- Card 1 -->
-                        <div class="min-w-[85%] snap-center bg-white/90 dark:bg-gray-800/80 backdrop-blur rounded-2xl shadow-md p-5 border border-white/40 dark:border-gray-700">
+                        <div class="bg-white/90 dark:bg-gray-800/80 backdrop-blur rounded-2xl shadow-md p-5 border border-white/40 dark:border-gray-700">
                             <div class="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900 flex items-center justify-center mb-3">
                                 <svg class="w-6 h-6 text-green-700 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
@@ -63,7 +63,7 @@
                         </div>
 
                         <!-- Card 2 -->
-                        <div class="min-w-[85%] snap-center bg-white/90 dark:bg-gray-800/80 backdrop-blur rounded-2xl shadow-md p-5 border border-white/40 dark:border-gray-700">
+                        <div class="bg-white/90 dark:bg-gray-800/80 backdrop-blur rounded-2xl shadow-md p-5 border border-white/40 dark:border-gray-700">
                             <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-3">
                                 <svg class="w-6 h-6 text-blue-700 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -74,7 +74,7 @@
                         </div>
 
                         <!-- Card 3 -->
-                        <div class="min-w-[85%] snap-center bg-white/90 dark:bg-gray-800/80 backdrop-blur rounded-2xl shadow-md p-5 border border-white/40 dark:border-gray-700">
+                        <div class="bg-white/90 dark:bg-gray-800/80 backdrop-blur rounded-2xl shadow-md p-5 border border-white/40 dark:border-gray-700">
                             <div class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-3">
                                 <svg class="w-6 h-6 text-purple-700 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -85,20 +85,7 @@
                         </div>
                     </div>
 
-                    <!-- Dots under the carousel -->
-                    <div class="mt-4 flex items-center justify-center gap-2">
-                        <button
-                            v-for="i in 3"
-                            :key="`dot-`+i"
-                            type="button"
-                            @click="scrollBenefitsTo(i-1)"
-                            class="h-2 rounded-full transition-all"
-                            :class="[ currentBenefitIndex === (i-1) ? 'bg-primary-600 w-5' : 'bg-gray-300 dark:bg-gray-600 w-2' ]"
-                            aria-label="Go to slide"
-                        />
-                    </div>
-
-                    <!-- CTA under the carousel -->
+                    <!-- CTA under the cards -->
                     <div class="mt-5 text-center">
                         <Link
                             :href="route('register')"
@@ -163,7 +150,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import ModernHero from './ModernHero.vue'
 import { Link } from '@inertiajs/vue3'
 
@@ -258,36 +245,5 @@ const heroSlides = ref([
     }
 ])
 
-// Mobile benefits carousel state
-const benefitsCarousel = ref(null)
-const currentBenefitIndex = ref(0)
-
-const updateBenefitIndex = () => {
-    const el = benefitsCarousel.value
-    if (!el) {
-        return
-    }
-    const containerWidth = el.clientWidth
-    // Card is ~85% of container width and gap is 16px (gap-4)
-    const cardWidth = containerWidth * 0.85
-    const step = cardWidth + 16
-    const idx = Math.round(el.scrollLeft / step)
-    currentBenefitIndex.value = Math.max(0, Math.min(2, idx))
-}
-
-const scrollBenefitsTo = (index) => {
-    const el = benefitsCarousel.value
-    if (!el) {
-        return
-    }
-    const containerWidth = el.clientWidth
-    const cardWidth = containerWidth * 0.85
-    const step = cardWidth + 16
-    el.scrollTo({ left: index * step, behavior: 'smooth' })
-    currentBenefitIndex.value = index
-}
-
-onMounted(() => {
-    updateBenefitIndex()
-})
+// (Mobile carousel logic removed; using stacked cards)
 </script>
