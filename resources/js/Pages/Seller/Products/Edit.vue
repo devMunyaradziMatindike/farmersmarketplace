@@ -185,32 +185,38 @@ const submitForm = () => {
     form.photos = photoFiles.value;
     console.log('Photos added to form:', form.photos.length, 'files');
     
-    console.log('About to call form.put...');
+    console.log('About to submit as FormData (spoofed PUT)...');
     console.log('Form data being submitted:', form.data());
-    
-    // Use Inertia form submission instead of router.put
-    form.put(route('seller.products.update', props.product.id), {
-        onStart: () => {
-            console.log('Form submission started...');
-        },
-        onProgress: (progress) => {
-            console.log('Form submission progress:', progress);
-        },
-        onSuccess: (page) => {
-            console.log('Product updated successfully!', page);
-            // Reset form
-            photoFiles.value = [];
-            photoPreviews.value = [];
-        },
-        onError: (errors) => {
-            console.log('Validation errors:', errors);
-            console.log('Form errors object:', form.errors);
-            console.log('Error details:', JSON.stringify(errors, null, 2));
-        },
-        onFinish: () => {
-            console.log('Form submission finished');
-        }
-    });
+
+    // Submit as multipart FormData and spoof PUT so files reach the server
+    form
+        .transform((data) => ({
+            ...data,
+            _method: 'put',
+        }))
+        .post(route('seller.products.update', props.product.id), {
+            forceFormData: true,
+            onStart: () => {
+                console.log('Form submission started...');
+            },
+            onProgress: (progress) => {
+                console.log('Form submission progress:', progress);
+            },
+            onSuccess: (page) => {
+                console.log('Product updated successfully!', page);
+                // Reset form
+                photoFiles.value = [];
+                photoPreviews.value = [];
+            },
+            onError: (errors) => {
+                console.log('Validation errors:', errors);
+                console.log('Form errors object:', form.errors);
+                console.log('Error details:', JSON.stringify(errors, null, 2));
+            },
+            onFinish: () => {
+                console.log('Form submission finished');
+            }
+        });
     
     console.log('form.put called, waiting for response...');
 };
