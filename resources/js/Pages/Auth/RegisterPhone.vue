@@ -13,7 +13,7 @@ const form = useForm({
     phone_number: '',
     password: '',
     password_confirmation: '',
-    role: 'buyer',
+    role: 'seller',
 });
 
 const submit = () => {
@@ -120,37 +120,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
-            <!-- Role Selection -->
-            <div>
-                <InputLabel value="Account Type *" />
-                <div class="mt-2 space-y-2">
-                    <label class="flex items-center cursor-pointer">
-                        <input
-                            v-model="form.role"
-                            type="radio"
-                            value="buyer"
-                            class="mr-3 text-primary-600 focus:ring-primary-500"
-                        />
-                        <div>
-                            <span class="text-gray-700 dark:text-gray-300 font-medium">🛒 Buyer</span>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Browse and purchase products</p>
-                        </div>
-                    </label>
-                    <label class="flex items-center cursor-pointer">
-                        <input
-                            v-model="form.role"
-                            type="radio"
-                            value="seller"
-                            class="mr-3 text-primary-600 focus:ring-primary-500"
-                        />
-                        <div>
-                            <span class="text-gray-700 dark:text-gray-300 font-medium">🌾 Seller</span>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">List and sell your products</p>
-                        </div>
-                    </label>
-                </div>
-                <InputError class="mt-2" :message="form.errors.role" />
-            </div>
+            
 
             <!-- Submit Button -->
             <div class="flex items-center justify-between">
