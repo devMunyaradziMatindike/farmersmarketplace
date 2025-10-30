@@ -175,20 +175,31 @@ class ProductController extends Controller
         }
 
         try {
-            $request->validate([
-                'category_id' => 'required|exists:categories,id',
-                'name' => 'required|string|max:255',
-                'description' => 'required|string',
-                'price' => 'required|numeric|min:0',
-                'currency' => 'required|in:USD,ZWG',
-                'location' => 'required|string|max:255',
-                'latitude' => 'nullable|numeric|between:-90,90',
-                'longitude' => 'nullable|numeric|between:-180,180',
-                'contact_details' => 'required|string|max:255',
-                'status' => 'required|in:available,sold_out,soon_to_be_available,delisted',
-                'photos' => 'nullable|array|max:10',
-                'photos.*' => 'image|mimes:jpeg,jpg,png,gif,webp|max:10240', // Increased to 10MB per file
-            ]);
+            // If request is photos only, validate photos and skip main fields
+            if ($request->hasFile('photos') && !$request->hasAny([
+                'category_id','name','description','price','currency','location','latitude','longitude','contact_details','status'
+            ])) {
+                $request->validate([
+                    'photos' => 'required|array|max:10',
+                    'photos.*' => 'image|mimes:jpeg,jpg,png,gif,webp|max:10240',
+                ]);
+            } else {
+                // Partial update: validate only provided fields
+                $request->validate([
+                    'category_id' => 'sometimes|required|exists:categories,id',
+                    'name' => 'sometimes|required|string|max:255',
+                    'description' => 'sometimes|required|string',
+                    'price' => 'sometimes|required|numeric|min:0',
+                    'currency' => 'sometimes|required|in:USD,ZWG',
+                    'location' => 'sometimes|required|string|max:255',
+                    'latitude' => 'nullable|numeric|between:-90,90',
+                    'longitude' => 'nullable|numeric|between:-180,180',
+                    'contact_details' => 'sometimes|required|string|max:255',
+                    'status' => 'sometimes|required|in:available,sold_out,soon_to_be_available,delisted',
+                    'photos' => 'nullable|array|max:10',
+                    'photos.*' => 'image|mimes:jpeg,jpg,png,gif,webp|max:10240',
+                ]);
+            }
         } catch (\Illuminate\Validation\ValidationException $e) {
             \Log::error('Product update validation failed:', [
                 'errors' => $e->errors(),
@@ -197,22 +208,18 @@ class ProductController extends Controller
             throw $e;
         }
 
-        $updateData = [
-            'category_id' => $request->category_id,
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'currency' => $request->currency,
-            'location' => $request->location,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'contact_details' => $request->contact_details,
-            'status' => $request->status,
-        ];
+        // Only update attributes that were actually provided
+        $updatable = ['category_id','name','description','price','currency','location','latitude','longitude','contact_details','status'];
+        $updateData = array_filter(
+            $request->only($updatable),
+            fn ($v) => !is_null($v)
+        );
 
-        \Log::info('Attempting to update product with data:', $updateData);
-
-        $result = $product->update($updateData);
+        $result = true;
+        if (!empty($updateData)) {
+            \Log::info('Attempting to update product with data:', $updateData);
+            $result = $product->update($updateData);
+        }
 
         \Log::info('Product update result:', [
             'update_successful' => $result,
