@@ -244,21 +244,7 @@ const handleLocationSelected = (locationData) => {
     console.log('Location selected:', locationData);
 };
 
-// Debug function to check form state
-const debugForm = () => {
-    console.log('=== FORM DEBUG ===');
-    console.log('Form object:', form);
-    console.log('Form data:', form.data());
-    console.log('Form errors:', form.errors);
-    console.log('Form processing:', form.processing);
-    console.log('Form has errors:', form.hasErrors);
-    console.log('Button should be disabled:', form.processing);
-};
-
-// Watch form data changes for debugging
-watch(() => form.data(), (newData) => {
-    console.log('Form data changed:', newData);
-}, { deep: true });
+// (Debug helpers removed)
 
 onMounted(() => {
     // Using OpenStreetMap autocomplete component, no Google initialization needed
@@ -626,17 +612,7 @@ onMounted(() => {
                         </div>
                     </div>
 
-                    <!-- Debug Button (temporary) -->
-                    <div class="bg-yellow-100 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded-lg p-4 mb-6">
-                        <h4 class="text-sm font-medium text-yellow-800 dark:text-yellow-200 mb-2">Debug Tools</h4>
-                        <button
-                            type="button"
-                            @click="debugForm"
-                            class="px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700 transition-colors"
-                        >
-                            Check Form Data
-                        </button>
-                    </div>
+                    
 
                     <!-- Submit Button -->
                     <div class="flex items-center justify-end space-x-4">
