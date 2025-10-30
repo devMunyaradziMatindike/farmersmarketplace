@@ -311,4 +311,38 @@ class ProductController extends Controller
         return redirect()->back()
             ->with('success', 'Product status updated successfully.');
     }
+
+    /**
+     * Delete a specific photo from the product and reassign primary if needed.
+     */
+    public function deletePhoto(Request $request, Product $product, ProductPhoto $photo)
+    {
+        // Ensure the product belongs to the authenticated seller
+        if ($product->user_id !== $request->user()->id) {
+            abort(403, 'Unauthorized. This product does not belong to you.');
+        }
+
+        // Ensure the photo belongs to the product
+        if ($photo->product_id !== $product->id) {
+            abort(404, 'Photo not found for this product.');
+        }
+
+        $wasPrimary = (bool) $photo->is_primary;
+
+        // Delete file from storage (ignore if missing)
+        Storage::disk('public')->delete($photo->photo_path);
+
+        // Delete DB record
+        $photo->delete();
+
+        // If it was primary, promote the next one
+        if ($wasPrimary) {
+            $next = $product->photos()->orderBy('order')->first();
+            if ($next) {
+                $next->update(['is_primary' => true]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Photo removed successfully.');
+    }
 }

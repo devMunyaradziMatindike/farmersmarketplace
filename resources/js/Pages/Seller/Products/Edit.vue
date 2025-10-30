@@ -87,10 +87,19 @@ const removeNewPhoto = (index) => {
 };
 
 const removeExistingPhoto = (photoId) => {
-    if (confirm('Are you sure you want to delete this photo?')) {
-        // This will be handled by the backend
-        existingPhotos.value = existingPhotos.value.filter(photo => photo.id !== photoId);
-    }
+    if (!confirm('Are you sure you want to delete this photo?')) return;
+
+    // Send delete request to backend and then update local state
+    router.delete(route('seller.products.photos.destroy', { product: props.product.id, photo: photoId }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            existingPhotos.value = existingPhotos.value.filter(photo => photo.id !== photoId);
+        },
+        onError: (errors) => {
+            console.error('Failed to delete photo:', errors);
+            alert('Could not delete photo. Please try again.');
+        }
+    });
 };
 
 const setPrimaryPhoto = (index, isNew = false) => {

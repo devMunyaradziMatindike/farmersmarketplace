@@ -101,6 +101,9 @@ Route::middleware(['auth'])->prefix('seller')->name('seller.')->group(function (
     
     // Product Management
     Route::resource('products', SellerProductController::class);
+    // Product Photos
+    Route::delete('products/{product}/photos/{photo}', [SellerProductController::class, 'deletePhoto'])
+        ->name('products.photos.destroy');
     Route::patch('products/{product}/status', [SellerProductController::class, 'updateStatus'])->name('products.status');
     
     // Analytics
