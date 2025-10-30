@@ -21,34 +21,41 @@
                         </h1>
                         <p class="text-white/90 mt-1">Real-time prices and comparisons across Zimbabwean markets</p>
                     </div>
-                    <div class="flex flex-wrap items-center gap-2 text-sm">
-                        <span class="bg-white/15 rounded-full px-3 py-1">🔄 Updated: {{ lastUpdated }}</span>
-                        <span class="bg-white/15 rounded-full px-3 py-1">📍 {{ meta.markets }} Markets</span>
-                        <span class="bg-white/15 rounded-full px-3 py-1">🥬 {{ meta.commodities }} Commodities</span>
+                    <div class="flex items-center gap-2 text-xs sm:text-sm mt-3 sm:mt-0 overflow-x-auto no-scrollbar py-1 -mx-1 px-1 sticky top-[64px] sm:static">
+                        <span class="shrink-0 bg-white/15 rounded-full px-3 py-1">🔄 Updated: {{ lastUpdated }}</span>
+                        <span class="shrink-0 bg-white/15 rounded-full px-3 py-1">📍 {{ meta.markets }} Markets</span>
+                        <span class="shrink-0 bg-white/15 rounded-full px-3 py-1">🥬 {{ meta.commodities }} Commodities</span>
                     </div>
                 </div>
             </div>
 
       <!-- Category Tabs -->
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
-        <div class="flex flex-wrap gap-2 mb-4">
+        <div class="flex gap-2 overflow-x-auto no-scrollbar -mx-1 px-1">
           <button
             v-for="(label, key) in categories"
             :key="key"
             @click="setActiveCategory(key)"
             :class="[
-              'px-4 py-2 rounded-lg font-medium transition-all touch-manipulation',
+              'px-4 py-2 rounded-full text-sm font-semibold transition-all touch-manipulation whitespace-nowrap',
               activeCategory === key
-                ? 'bg-green-600 text-white shadow-md'
+                ? 'bg-green-600 text-white shadow'
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
             ]"
           >
             {{ label }}
           </button>
+          <div class="grow"></div>
+          <button
+            @click="filtersOpen = !filtersOpen"
+            class="sm:hidden px-4 py-2 rounded-full text-sm font-semibold bg-gray-900 text-white dark:bg-gray-700"
+          >
+            Filters
+          </button>
         </div>
 
         <!-- Filters -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div :class="['grid grid-cols-1 md:grid-cols-4 gap-4 mt-4', filtersOpen ? 'block' : 'hidden sm:grid']">
           <div>
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Commodity</label>
             <select v-model="filters.commodity" @change="fetchPrices" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
@@ -78,7 +85,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 sm:mb-8">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">🏆 Top Prices</h2>
-                    <div class="space-y-3">
+                    <div class="hidden sm:block space-y-3">
                         <div v-for="(row, idx) in topPrices" :key="idx" class="flex items-center justify-between p-3 rounded-xl bg-green-50 dark:bg-green-900/20">
                             <div>
                                 <div class="font-medium text-gray-900 dark:text-white">{{ row.commodity }}</div>
@@ -91,11 +98,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="sm:hidden -mx-2 px-2">
+                        <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory py-1">
+                            <div v-for="(row, idx) in topPrices" :key="idx" class="min-w-[85%] snap-center p-4 rounded-2xl bg-green-900/15 border border-green-900/20">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <div class="font-semibold text-white dark:text-white">{{ row.commodity }}</div>
+                                        <div class="text-xs text-gray-400">{{ row.market }}, {{ row.province }}</div>
+                                    </div>
+                                    <span class="px-2 py-1 rounded-full text-xs bg-white/10 text-green-300">{{ row.unit }}</span>
+                                </div>
+                                <div class="mt-3 flex items-end justify-between">
+                                    <div class="text-2xl font-bold text-green-400">{{ formatZWGPrice(row.price) }}</div>
+                                    <div class="text-lg font-semibold text-green-300">${{ row.price.toFixed(2) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">💰 Best Deals</h2>
-                    <div class="space-y-3">
+                    <div class="hidden sm:block space-y-3">
                         <div v-for="(row, idx) in bestDeals" :key="idx" class="flex items-center justify-between p-3 rounded-xl bg-blue-50 dark:bg-blue-900/20">
                             <div>
                                 <div class="font-medium text-gray-900 dark:text-white">{{ row.commodity }}</div>
@@ -108,11 +132,52 @@
                             </div>
                         </div>
                     </div>
+                    <div class="sm:hidden -mx-2 px-2">
+                        <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory py-1">
+                            <div v-for="(row, idx) in bestDeals" :key="idx" class="min-w-[85%] snap-center p-4 rounded-2xl bg-blue-900/15 border border-blue-900/20">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <div class="font-semibold text-white dark:text-white">{{ row.commodity }}</div>
+                                        <div class="text-xs text-gray-400">{{ row.market }}, {{ row.province }}</div>
+                                    </div>
+                                    <span class="px-2 py-1 rounded-full text-xs bg-white/10 text-blue-300">{{ row.unit }}</span>
+                                </div>
+                                <div class="mt-3 flex items-end justify-between">
+                                    <div class="text-2xl font-bold text-blue-300">{{ formatZWGPrice(row.price) }}</div>
+                                    <div class="text-lg font-semibold text-blue-200">${{ row.price.toFixed(2) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Table -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
+            <!-- Mobile list (cards) -->
+            <div class="sm:hidden space-y-3 mb-6">
+                <div v-for="(row, idx) in filtered" :key="idx" class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-4">
+                    <div class="flex items-start justify-between">
+                        <div class="min-w-0">
+                            <p class="text-base font-semibold text-gray-900 dark:text-white truncate">{{ row.commodity }}</p>
+                            <p class="text-xs text-gray-500">{{ row.market }}, {{ row.province }}</p>
+                        </div>
+                        <span :class="trendClass(row.trend)" class="px-2 py-0.5 rounded-full text-[11px] font-medium">{{ trendIcon(row.trend) }} {{ row.change }}%</span>
+                    </div>
+                    <div class="mt-3 grid grid-cols-2 gap-3 items-end">
+                        <div>
+                            <p class="text-[11px] text-gray-500">USD</p>
+                            <p class="text-lg font-semibold text-gray-900 dark:text-white">${{ row.price.toFixed(2) }}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[11px] text-gray-500">ZWG (≈)</p>
+                            <p class="text-2xl font-bold text-green-600 dark:text-green-400">{{ formatZWGPrice(row.price) }}</p>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-xs text-gray-500">{{ row.unit }}</div>
+                </div>
+            </div>
+
+            <!-- Table (desktop/tablet only) -->
+            <div class="hidden sm:block bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -260,6 +325,9 @@ const fetchPrices = async () => {
 onMounted(() => {
     fetchPrices();
 });
+
+// Mobile filters collapsible state
+const filtersOpen = ref(false);
 </script>
 
 
