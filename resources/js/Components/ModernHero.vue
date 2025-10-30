@@ -34,11 +34,20 @@
                                         decoding="async"
                                     />
                                 </div>
-                                <!-- Category Label -->
-                                <div class="p-3 text-center">
-                                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white line-clamp-1">
+                                <!-- Category Label, Description and CTA (mobile) -->
+                                <div class="p-3">
+                                    <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-1.5 line-clamp-2 leading-tight">
                                         {{ slide.subtitle }}
                                     </h3>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-2 line-clamp-2 leading-snug">
+                                        {{ slide.description }}
+                                    </p>
+                                    <div class="flex items-center gap-1 text-xs text-primary-600 dark:text-primary-400 font-medium">
+                                        <span>{{ slide.cta1 }}</span>
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </Link>
