@@ -50,7 +50,7 @@
 
                 <!-- Mobile-only Benefits: Horizontal Snap Cards -->
                 <div class="md:hidden -mx-4 px-4 py-6 bg-gradient-to-b from-transparent to-blue-950/10 dark:to-blue-900/20">
-                    <div class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
+                    <div ref="benefitsCarousel" @scroll="updateBenefitIndex" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
                         <!-- Card 1 -->
                         <div class="min-w-[85%] snap-center bg-white/90 dark:bg-gray-800/80 backdrop-blur rounded-2xl shadow-md p-5 border border-white/40 dark:border-gray-700">
                             <div class="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900 flex items-center justify-center mb-3">
@@ -83,6 +83,19 @@
                             <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-1">Track Performance</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300">Monitor views, inquiries, and sales to optimize listings.</p>
                         </div>
+                    </div>
+
+                    <!-- Dots under the carousel -->
+                    <div class="mt-4 flex items-center justify-center gap-2">
+                        <button
+                            v-for="i in 3"
+                            :key="`dot-`+i"
+                            type="button"
+                            @click="scrollBenefitsTo(i-1)"
+                            class="h-2 rounded-full transition-all"
+                            :class="[ currentBenefitIndex === (i-1) ? 'bg-primary-600 w-5' : 'bg-gray-300 dark:bg-gray-600 w-2' ]"
+                            aria-label="Go to slide"
+                        />
                     </div>
 
                     <!-- CTA under the carousel -->
@@ -150,7 +163,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import ModernHero from './ModernHero.vue'
 import { Link } from '@inertiajs/vue3'
 
@@ -244,4 +257,37 @@ const heroSlides = ref([
         cta2: 'Find Local Farmers'
     }
 ])
+
+// Mobile benefits carousel state
+const benefitsCarousel = ref(null)
+const currentBenefitIndex = ref(0)
+
+const updateBenefitIndex = () => {
+    const el = benefitsCarousel.value
+    if (!el) {
+        return
+    }
+    const containerWidth = el.clientWidth
+    // Card is ~85% of container width and gap is 16px (gap-4)
+    const cardWidth = containerWidth * 0.85
+    const step = cardWidth + 16
+    const idx = Math.round(el.scrollLeft / step)
+    currentBenefitIndex.value = Math.max(0, Math.min(2, idx))
+}
+
+const scrollBenefitsTo = (index) => {
+    const el = benefitsCarousel.value
+    if (!el) {
+        return
+    }
+    const containerWidth = el.clientWidth
+    const cardWidth = containerWidth * 0.85
+    const step = cardWidth + 16
+    el.scrollTo({ left: index * step, behavior: 'smooth' })
+    currentBenefitIndex.value = index
+}
+
+onMounted(() => {
+    updateBenefitIndex()
+})
 </script>
