@@ -233,6 +233,12 @@ class ProductController extends Controller
                 $currentPhotoCount = $product->photos()->count();
                 $maxOrder = $product->photos()->max('order') ?? -1;
 
+                // By default, when new photos are uploaded, make the first one primary
+                // and demote any existing primary photo.
+                if ($currentPhotoCount > 0) {
+                    $product->photos()->where('is_primary', true)->update(['is_primary' => false]);
+                }
+
                 foreach ($request->file('photos') as $index => $photo) {
                     if ($photo->isValid()) {
                         $path = $photo->store('products', 'public');
@@ -240,7 +246,7 @@ class ProductController extends Controller
                         ProductPhoto::create([
                             'product_id' => $product->id,
                             'photo_path' => $path,
-                            'is_primary' => $currentPhotoCount === 0 && $index === 0,
+                            'is_primary' => $index === 0, // first newly uploaded becomes primary
                             'order' => $maxOrder + $index + 1,
                         ]);
                     } else {
