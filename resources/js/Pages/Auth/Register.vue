@@ -46,7 +46,7 @@ import { Head, Link } from '@inertiajs/vue3';
                                     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                                 </svg>
-                            </div>
+            </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                                     Sign in with Google
@@ -54,8 +54,8 @@ import { Head, Link } from '@inertiajs/vue3';
                                 <p class="text-sm text-gray-600 dark:text-gray-400">
                                     <strong>Recommended:</strong> Fast and secure registration
                                 </p>
-                            </div>
-                        </div>
+            </div>
+            </div>
                         <a
                             :href="route('google.redirect')"
                             class="inline-flex items-center justify-center w-32 h-12 bg-white border border-gray-300 rounded-lg font-semibold text-sm text-gray-700 hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-sm hover:shadow-md"
@@ -79,11 +79,11 @@ import { Head, Link } from '@inertiajs/vue3';
                                 <div class="w-10 h-10 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center">
                                     <span class="text-2xl">📱</span>
                                 </div>
-                            </div>
+            </div>
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                                     Register with Phone Number
-                                </h3>
+                        </h3>
                                 <div class="mt-1 text-xs text-blue-600 dark:text-blue-400">
                                     📱 SMS verification 📞 Phone number required
                                 </div>
@@ -104,12 +104,12 @@ import { Head, Link } from '@inertiajs/vue3';
 
 
         <div class="flex items-center justify-center mt-6">
-            <Link
-                :href="route('login')"
+                <Link
+                    :href="route('login')"
                 class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
                 Already have a seller account? Sign in
-            </Link>
+                </Link>
         </div>
     </GuestLayout>
 </template>
