@@ -158,8 +158,107 @@
         <!-- Safe Trading & Security Section -->
         <SafeTradingSection />
 
+        <!-- Footer (Mobile-Only, compact) -->
+        <footer class="sm:hidden bg-gray-900 text-gray-200 border-t border-gray-800 mt-10">
+            <div class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+                <!-- Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+                        <span class="text-white text-xl">🌾</span>
+                    </div>
+                    <div>
+                        <p class="text-lg font-bold text-white">Musika Wedu</p>
+                        <p class="text-xs text-gray-400">Zimbabwe’s Premier Agricultural Marketplace</p>
+                    </div>
+                </div>
+
+                <!-- Quick actions -->
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="https://wa.me/263782339300" target="_blank"
+                       class="inline-flex items-center justify-center gap-2 py-3 rounded-lg bg-green-600 text-white font-semibold">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                        WhatsApp
+                    </a>
+                    <a href="mailto:info@nessosystems.co.zw"
+                       class="inline-flex items-center justify-center gap-2 py-3 rounded-lg bg-gray-800 text-gray-100 font-semibold border border-gray-700">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Email
+                    </a>
+                </div>
+
+                <!-- Collapsible groups -->
+                <details class="group border border-gray-800 rounded-lg overflow-hidden">
+                    <summary class="flex items-center justify-between px-4 py-3 bg-gray-800/50 cursor-pointer">
+                        <span class="text-sm font-semibold">Quick Links</span>
+                        <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <nav class="px-4 pb-3 pt-1 text-sm">
+                        <ul class="space-y-2">
+                            <li><Link :href="route('home')" class="block py-1 text-gray-300 hover:text-white">Home</Link></li>
+                            <li><Link :href="route('products.index')" class="block py-1 text-gray-300 hover:text-white">Products</Link></li>
+                            <li><Link :href="route('register')" class="block py-1 text-gray-300 hover:text-white">Become a Seller</Link></li>
+                            <li><Link href="#about" class="block py-1 text-gray-300 hover:text-white">About Us</Link></li>
+                        </ul>
+                    </nav>
+                </details>
+
+                <details class="group border border-gray-800 rounded-lg overflow-hidden">
+                    <summary class="flex items-center justify-between px-4 py-3 bg-gray-800/50 cursor-pointer">
+                        <span class="text-sm font-semibold">Categories</span>
+                        <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <nav class="px-4 pb-3 pt-1 text-sm">
+                        <ul class="space-y-2">
+                            <li v-for="cat in categories.slice(0, 5)" :key="cat.id">
+                                <Link :href="route('products.index', { category_id: cat.id })" class="block py-1 text-gray-300 hover:text-white">{{ cat.name }}</Link>
+                            </li>
+                        </ul>
+                    </nav>
+                </details>
+
+                <details class="group border border-gray-800 rounded-lg overflow-hidden">
+                    <summary class="flex items-center justify-between px-4 py-3 bg-gray-800/50 cursor-pointer">
+                        <span class="text-sm font-semibold">Legal & Contact</span>
+                        <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <div class="px-4 pb-3 pt-1 text-sm space-y-2">
+                        <a href="/terms-and-conditions.html" target="_blank" class="block py-1 text-gray-300 hover:text-white">Terms & Conditions</a>
+                        <a href="/privacy-policy.html" target="_blank" class="block py-1 text-gray-300 hover:text-white">Privacy Policy</a>
+                        <a href="/cookie-policy.html" target="_blank" class="block py-1 text-gray-300 hover:text-white">Cookie Policy</a>
+                        <a href="/end-user-license-agreement.html" target="_blank" class="block py-1 text-gray-300 hover:text-white">EULA</a>
+                        <a href="/intellectual-property.html" target="_blank" class="block py-1 text-gray-300 hover:text-white">Intellectual Property</a>
+                    </div>
+                </details>
+
+                <!-- Social + copyright -->
+                <div class="flex items-center justify-between pt-2 border-t border-gray-800">
+                    <div class="flex items-center gap-4 text-gray-400">
+                        <a href="#" class="hover:text-white" aria-label="Facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.95v-7.04H7.9V12h2.6V9.8c0-2.57 1.53-3.99 3.87-3.99 1.12 0 2.3.2 2.3.2v2.53h-1.3c-1.28 0-1.68.79-1.68 1.6V12h2.86l-.46 2.91h-2.4v7.04A10 10 0 0022 12z"/></svg>
+                        </a>
+                        <a href="#" class="hover:text-white" aria-label="Twitter">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.25 4.25 0 001.86-2.35 8.48 8.48 0 01-2.69 1.03 4.24 4.24 0 00-7.22 3.87A12.04 12.04 0 013 5.15a4.24 4.24 0 001.31 5.66 4.2 4.2 0 01-1.92-.53v.05a4.24 4.24 0 003.4 4.16 4.25 4.25 0 01-1.91.07 4.24 4.24 0 003.96 2.95A8.5 8.5 0 012 19.54a12.02 12.02 0 006.51 1.91c7.82 0 12.1-6.48 12.1-12.1l-.01-.55A8.64 8.64 0 0022.46 6z"/></svg>
+                        </a>
+                    </div>
+                    <p class="text-xs text-gray-400">© 2025 Musika Wedu</p>
+                </div>
+            </div>
+        </footer>
+
         <!-- Footer -->
-        <footer class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12 sm:mt-16">
+        <footer class="hidden sm:block bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12 sm:mt-16">
             <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-12 sm:py-16">
                 <!-- Main Footer Content -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
