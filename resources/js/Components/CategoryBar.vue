@@ -1,17 +1,17 @@
 <template>
     <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Mobile: Grid layout showing all categories -->
-            <div class="md:hidden py-3">
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <!-- Mobile: Compact grid layout - all categories visible without scrolling -->
+            <div class="md:hidden py-2">
+                <div class="grid grid-cols-2 gap-1.5">
                     <!-- All Categories -->
                     <button
                         @click="selectCategory(null)"
                         :class="[
-                            'px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 min-h-[44px]',
+                            'px-2 py-1.5 rounded-lg text-[11px] font-medium transition-all flex items-center justify-center gap-1 min-h-[40px] touch-manipulation',
                             !selectedCategory
-                                ? 'bg-primary-600 text-white'
-                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                ? 'bg-primary-600 text-white shadow-sm'
+                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 active:bg-gray-300 dark:active:bg-gray-500'
                         ]"
                     >
                         <span>All</span>
@@ -23,14 +23,14 @@
                         :key="category.id"
                         @click="selectCategory(category.id)"
                         :class="[
-                            'px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 min-h-[44px]',
+                            'px-2 py-1.5 rounded-lg text-[11px] font-medium transition-all flex items-center justify-center gap-1 min-h-[40px] touch-manipulation',
                             selectedCategory === category.id
-                                ? 'bg-primary-600 text-white'
-                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                ? 'bg-primary-600 text-white shadow-sm'
+                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 active:bg-gray-300 dark:active:bg-gray-500'
                         ]"
                     >
-                        <span>{{ getCategoryIcon(category.name) }}</span>
-                        <span class="truncate">{{ category.name }}</span>
+                        <span class="text-xs leading-none">{{ getCategoryIcon(category.name) }}</span>
+                        <span class="truncate leading-tight">{{ category.name }}</span>
                     </button>
                 </div>
             </div>
