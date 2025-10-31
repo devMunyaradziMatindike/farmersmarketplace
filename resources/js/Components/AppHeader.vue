@@ -100,18 +100,6 @@
                             <span class="hidden sm:inline">Become a Seller</span>
                             <span class="sm:hidden">Sell</span>
                         </Link>
-                        
-                        <!-- Events Button - to the right of "Become a Seller" -->
-                        <Link
-                            :href="route('events.index')"
-                            class="px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition touch-manipulation flex items-center gap-1.5"
-                        >
-                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <span class="hidden sm:inline">Events</span>
-                            <span class="sm:hidden">Events</span>
-                        </Link>
                     </div>
                 </div>
             </div>
