@@ -56,7 +56,7 @@ class EventSeeder extends Seeder
             'title' => 'Livestock Health & Management Training',
             'description' => 'Comprehensive training on livestock health, vaccination schedules, feeding programs, and disease prevention. Ideal for livestock farmers and cooperatives.',
             'type' => 'training',
-            'image' => '/farm/cattle2.jpg',
+            'image' => '/farm/cattle3.jpg',
             'start_date' => now()->addMonths(1)->format('Y-m-d 08:00:00'),
             'end_date' => now()->addMonths(1)->addDays(2)->format('Y-m-d 16:00:00'),
             'location' => 'Bulawayo Agricultural Showgrounds, Bulawayo',
