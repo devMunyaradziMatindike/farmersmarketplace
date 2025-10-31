@@ -44,13 +44,22 @@
                         </div>
                     </div>
 
-                    <div class="mt-8">
+                    <div class="mt-8 flex items-center gap-4">
                         <Link
                             :href="route('register')"
                             class="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700 transition-all shadow-lg hover:shadow-xl hover:scale-105"
                         >
                             <span class="mr-2">🌾</span>
                             Join as a Seller
+                        </Link>
+                        <Link
+                            :href="route('events.index')"
+                            class="inline-flex items-center px-8 py-4 bg-white dark:bg-gray-800 text-primary-600 dark:text-primary-400 font-bold rounded-xl border-2 border-primary-600 dark:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                        >
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Events
                         </Link>
                     </div>
                 </div>
