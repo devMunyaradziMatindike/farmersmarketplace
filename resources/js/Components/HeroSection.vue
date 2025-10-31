@@ -234,6 +234,16 @@ const heroSlides = ref([
         cta2: 'List Animals'
     },
     {
+        image: '/farm/mudhumeni.png',
+        objectPosition: 'center 35%',
+        fallback: '/images/placeholder-hero.svg',
+        subtitle: 'Expert Agricultural Consultancy',
+        advertising: '📚 Professional Consultancy Services',
+        description: 'Connect with agronomists and lecturers for expert farming advice and services',
+        cta1: 'Find Consultants',
+        cta2: 'Offer Services'
+    },
+    {
         image: '/farm/maize-field.jpg',
         objectPosition: 'center 35%',
         fallback: '/images/placeholder-hero.svg',

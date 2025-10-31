@@ -165,7 +165,8 @@ function getCta1Link(slide) {
         'Get Irrigation': route('products.index', { category_id: 8 }),
         'Buy Cattle': route('products.index', { category_id: 5 }),
         'Buy Sheep': route('products.index', { category_id: 5 }),
-        'Buy Goats': route('products.index', { category_id: 5 })
+        'Buy Goats': route('products.index', { category_id: 5 }),
+        'Find Consultants': route('products.index', { category_id: 13 })
     }
     return cta1Map[slide.cta1] || route('products.index')
 }

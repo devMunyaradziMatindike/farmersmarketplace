@@ -56,6 +56,10 @@ class CategorySeeder extends Seeder
                 'name' => 'Agricultural Services',
                 'description' => 'Farming consultation, land preparation, harvesting services, etc.',
             ],
+            [
+                'name' => 'Consultancy Services',
+                'description' => 'Agricultural consultancy services from agronomists, lecturers, and farming experts. Get expert advice on crop management, soil analysis, farm planning, and more.',
+            ],
         ];
 
         foreach ($categories as $category) {
