@@ -90,7 +90,7 @@
         </div>
 
         <!-- Desktop Layout: Vertical Card (Original) -->
-        <div class="hidden md:block bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="hidden md:block bg-white dark:bg-gray-800 rounded-lg shadow card-hover overflow-hidden">
             <!-- Product Image -->
             <div class="relative aspect-[4/3] sm:aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
                 <img

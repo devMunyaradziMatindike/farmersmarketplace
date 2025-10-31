@@ -1,5 +1,12 @@
 <template>
-    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <header 
+        :class="[
+            'border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-all duration-300',
+            isScrolled 
+                ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-md' 
+                : 'bg-white dark:bg-gray-800'
+        ]"
+    >
         <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
             <div class="flex items-center justify-between h-14 sm:h-16">
                 <!-- Logo - Always visible with responsive sizing -->
@@ -182,7 +189,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import Dropdown from './Dropdown.vue';
 import DropdownLink from './DropdownLink.vue';
@@ -196,9 +203,21 @@ defineProps({
 });
 
 const isDark = ref(false);
+const isScrolled = ref(false);
+
+const handleScroll = () => {
+    isScrolled.value = window.scrollY > 50;
+};
 
 onMounted(() => {
     isDark.value = document.documentElement.classList.contains('dark');
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Initial check
+    handleScroll();
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
 });
 
 const toggleDarkMode = () => {
