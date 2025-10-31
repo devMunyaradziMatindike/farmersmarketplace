@@ -93,7 +93,15 @@
                             <span class="sm:hidden">Login</span>
                         </Link>
                         
-                        <!-- Events Button -->
+                        <Link
+                            :href="route('register')"
+                            class="px-2 sm:px-4 py-1.5 sm:py-2 bg-primary-600 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-primary-700 transition touch-manipulation"
+                        >
+                            <span class="hidden sm:inline">Become a Seller</span>
+                            <span class="sm:hidden">Sell</span>
+                        </Link>
+                        
+                        <!-- Events Button - to the right of "Become a Seller" -->
                         <Link
                             :href="route('events.index')"
                             class="px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition touch-manipulation flex items-center gap-1.5"
@@ -103,14 +111,6 @@
                             </svg>
                             <span class="hidden sm:inline">Events</span>
                             <span class="sm:hidden">Events</span>
-                        </Link>
-                        
-                        <Link
-                            :href="route('register')"
-                            class="px-2 sm:px-4 py-1.5 sm:py-2 bg-primary-600 text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-primary-700 transition touch-manipulation"
-                        >
-                            <span class="hidden sm:inline">Become a Seller</span>
-                            <span class="sm:hidden">Sell</span>
                         </Link>
                     </div>
                 </div>
