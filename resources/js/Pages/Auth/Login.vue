@@ -92,6 +92,21 @@ const isEmailAlreadyVerified = computed(() => props.status === 'email-already-ve
             </div>
         </div>
 
+        <!-- Error Message (for OAuth failures) -->
+        <div v-if="$page.props.flash?.error" class="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div class="flex items-center">
+                <span class="text-2xl mr-3">⚠️</span>
+                <div>
+                    <h3 class="text-sm font-medium text-red-800 dark:text-red-200">
+                        Authentication Error
+                    </h3>
+                    <p class="text-sm text-red-700 dark:text-red-300 mt-1">
+                        {{ $page.props.flash.error }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <!-- Google Sign-In Button -->
         <button
             @click="googleSignIn"
