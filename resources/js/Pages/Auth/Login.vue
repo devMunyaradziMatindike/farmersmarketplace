@@ -5,8 +5,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { ref, computed, onMounted } from 'vue';
 
 const props = defineProps({
     canResetPassword: {
@@ -28,8 +28,33 @@ const isEmail = ref(true);
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
+        onError: (errors) => {
+            // Handle 419 CSRF token expiration
+            if (errors._token || (Object.keys(errors).length === 0 && !form.hasErrors)) {
+                // Reload page to get fresh CSRF token
+                router.reload({ only: [] });
+            }
+        },
     });
 };
+
+// Refresh CSRF token on mount to prevent expiration
+onMounted(() => {
+    // If page has been open, reload to refresh CSRF token
+    if (typeof window !== 'undefined') {
+        const lastLoad = sessionStorage.getItem('lastCSRFRefresh');
+        if (lastLoad) {
+            const minutesSinceLoad = (Date.now() - parseInt(lastLoad)) / (1000 * 60);
+            if (minutesSinceLoad > 5) {
+                // Reload if page open for more than 5 minutes
+                sessionStorage.setItem('lastCSRFRefresh', Date.now().toString());
+                router.reload({ only: [] });
+            }
+        } else {
+            sessionStorage.setItem('lastCSRFRefresh', Date.now().toString());
+        }
+    }
+});
 
 const toggleInputType = () => {
     isEmail.value = !isEmail.value;
