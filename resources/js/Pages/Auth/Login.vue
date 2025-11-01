@@ -25,11 +25,52 @@ const form = useForm({
 
 const isEmail = ref(true);
 
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-        preserveScroll: true,
+const submit = (e) => {
+    // Prevent default form submission
+    if (e) {
+        e.preventDefault();
+    }
+    
+    console.log('Login form submitted', { 
+        email: form.email, 
+        processing: form.processing,
+        hasErrors: form.hasErrors,
+        errors: form.errors
     });
+    
+    // Validate form before submission
+    if (!form.email || !form.password) {
+        console.error('Form validation failed - missing email or password');
+        return;
+    }
+    
+    try {
+        form.post(route('login'), {
+            onStart: () => {
+                console.log('Login request started');
+            },
+            onProgress: () => {
+                console.log('Login request in progress');
+            },
+            onSuccess: (page) => {
+                console.log('Login successful', page);
+            },
+            onError: (errors) => {
+                console.error('Login errors:', errors);
+                // Check for 419 error specifically
+                if (errors._token || (Object.keys(errors).length === 0 && !form.hasErrors)) {
+                    console.log('CSRF token issue - reloading page');
+                    router.reload({ only: [] });
+                }
+            },
+            onFinish: () => {
+                console.log('Login request finished');
+            },
+            preserveScroll: true,
+        });
+    } catch (error) {
+        console.error('Exception during login:', error);
+    }
 };
 
 // Refresh CSRF token on mount to prevent expiration
@@ -157,7 +198,7 @@ const isEmailAlreadyVerified = computed(() => props.status === 'email-already-ve
         </div>
 
         <!-- Login Form -->
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" novalidate>
             <!-- Email or Phone Toggle -->
             <div>
                 <div class="flex items-center justify-between mb-2">
@@ -220,11 +261,13 @@ const isEmailAlreadyVerified = computed(() => props.status === 'email-already-ve
                 </Link>
 
                 <PrimaryButton
+                    type="submit"
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Log in
+                    <span v-if="form.processing">Logging in...</span>
+                    <span v-else>Log in</span>
                 </PrimaryButton>
             </div>
         </form>
