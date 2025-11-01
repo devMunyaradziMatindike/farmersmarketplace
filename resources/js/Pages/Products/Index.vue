@@ -75,8 +75,22 @@
                     </p>
                 </div>
 
-                <!-- View Toggle (Grid/List) -->
+                <!-- Actions: View Toggle & Save Search -->
                 <div class="flex items-center gap-2">
+                    <!-- Save Search Button (only if authenticated and has filters) -->
+                    <Link
+                        v-if="$page.props.auth?.user && hasActiveFilters"
+                        :href="route('saved-searches.index')"
+                        class="inline-flex items-center px-3 py-2 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+                        title="Save this search"
+                    >
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        </svg>
+                        Save Search
+                    </Link>
+                    
+                    <!-- View Toggle (Grid/List) -->
                     <button
                         @click="viewMode = 'grid'"
                         :class="[
@@ -529,6 +543,15 @@ const productsWithConversion = computed(() => {
             ? convertPrice(product.price, product.currency, product.currency === 'USD' ? 'ZWG' : 'USD').toFixed(2)
             : null
     }));
+});
+
+// Check if there are active filters
+const hasActiveFilters = computed(() => {
+    const f = props.filters;
+    return !!(f.q || f.search || f.category_id || f.min_price || f.max_price || 
+              f.location || f.min_quantity || f.max_quantity || f.unit || 
+              f.min_order_quantity || f.packaging_type || f.is_bulk_available || 
+              f.wholesale_only || f.is_perishable || f.season);
 });
 
 const getCurrentCategoryName = () => {

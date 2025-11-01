@@ -21,16 +21,17 @@ class ProductController extends Controller
         $query = Product::with(['category', 'user', 'photos'])
             ->available();
 
-        // Enhanced search functionality
+        // Enhanced search functionality with agricultural filters
+        $searchFilters = [];
+
         if ($request->filled('q')) {
             $searchTerm = $request->q;
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('name', 'like', "%{$searchTerm}%")
-                    ->orWhere('description', 'like', "%{$searchTerm}%")
-                    ->orWhereHas('category', function ($catQuery) use ($searchTerm) {
-                        $catQuery->where('name', 'like', "%{$searchTerm}%");
-                    });
-            });
+            $searchFilters = $request->only([
+                'min_quantity', 'max_quantity', 'unit', 'min_order_quantity',
+                'is_bulk_available', 'wholesale_only', 'is_perishable',
+                'season', 'packaging_type', 'sort',
+            ]);
+            $query->advancedSearch($searchTerm, $searchFilters);
         } elseif ($request->filled('search')) {
             // Legacy search parameter
             $query->searchByName($request->search);
@@ -46,6 +47,37 @@ class ProductController extends Controller
         // Filter by price range
         if ($request->filled('min_price') || $request->filled('max_price')) {
             $query->filterByPrice($request->min_price, $request->max_price);
+        }
+
+        // Agricultural quantity filters (if not already in advanced search)
+        if ($request->filled('q') === false) {
+            if ($request->filled('min_quantity') || $request->filled('max_quantity')) {
+                $query->filterByQuantity($request->min_quantity, $request->max_quantity);
+            }
+
+            if ($request->filled('unit')) {
+                $query->filterByUnit($request->unit);
+            }
+
+            if ($request->filled('is_bulk_available')) {
+                $query->bulkAvailable();
+            }
+
+            if ($request->filled('wholesale_only')) {
+                $query->wholesaleOnly();
+            }
+
+            if ($request->filled('is_perishable')) {
+                $query->where('is_perishable', true);
+            }
+
+            if ($request->filled('season')) {
+                $query->where('season', $request->season);
+            }
+
+            if ($request->filled('packaging_type')) {
+                $query->where('packaging_type', $request->packaging_type);
+            }
         }
 
         // Filter by location
@@ -110,7 +142,13 @@ class ProductController extends Controller
             'products' => $products,
             'categories' => Category::all(),
             'categoriesWithCount' => $categoriesWithCount,
-            'filters' => $request->only(['q', 'search', 'category', 'category_id', 'sort', 'min_price', 'max_price', 'location']),
+            'filters' => $request->only([
+                'q', 'search', 'category', 'category_id', 'sort',
+                'min_price', 'max_price', 'location',
+                'min_quantity', 'max_quantity', 'unit', 'min_order_quantity',
+                'is_bulk_available', 'wholesale_only', 'is_perishable',
+                'season', 'packaging_type',
+            ]),
             'stats' => $stats,
             'exchangeRate' => $exchangeRate,
             'locations' => $locations,
@@ -123,6 +161,9 @@ class ProductController extends Controller
     public function show(Product $product): Response
     {
         $product->load(['category', 'user', 'photos']);
+
+        // Increment views count
+        $product->incrementViews();
 
         return Inertia::render('Products/Show', [
             'product' => $product,

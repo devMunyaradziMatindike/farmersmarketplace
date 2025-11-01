@@ -57,6 +57,15 @@ Route::get('/events/{event}', [\App\Http\Controllers\Web\EventController::class,
 // Registration can be done by guests (cooperatives, companies) or authenticated users
 Route::post('/events/{event}/register', [\App\Http\Controllers\Web\EventController::class, 'register'])->name('events.register');
 
+// Saved Searches Routes (Authenticated)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/saved-searches', [\App\Http\Controllers\Web\SavedSearchController::class, 'index'])->name('saved-searches.index');
+    Route::post('/saved-searches', [\App\Http\Controllers\Web\SavedSearchController::class, 'store'])->name('saved-searches.store');
+    Route::get('/saved-searches/{savedSearch}/execute', [\App\Http\Controllers\Web\SavedSearchController::class, 'execute'])->name('saved-searches.execute');
+    Route::put('/saved-searches/{savedSearch}', [\App\Http\Controllers\Web\SavedSearchController::class, 'update'])->name('saved-searches.update');
+    Route::delete('/saved-searches/{savedSearch}', [\App\Http\Controllers\Web\SavedSearchController::class, 'destroy'])->name('saved-searches.destroy');
+});
+
 // Registration Options Page (Public)
 Route::get('/register', function () {
     return Inertia::render('Auth/Register');
