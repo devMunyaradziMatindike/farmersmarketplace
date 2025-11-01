@@ -28,13 +28,7 @@ const isEmail = ref(true);
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
-        onError: (errors) => {
-            // Handle 419 CSRF token expiration
-            if (errors._token || (Object.keys(errors).length === 0 && !form.hasErrors)) {
-                // Reload page to get fresh CSRF token
-                router.reload({ only: [] });
-            }
-        },
+        preserveScroll: true,
     });
 };
 

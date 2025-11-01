@@ -169,7 +169,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => env('SESSION_SECURE_COOKIE', parse_url(env('APP_URL', 'http://localhost:8000'), PHP_URL_SCHEME) === 'https'),
 
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +199,7 @@ return [
     |
     */
 
-    'same_site' => env('SESSION_SAME_SITE', 'lax'),
+    'same_site' => env('SESSION_SAME_SITE', parse_url(env('APP_URL', 'http://localhost:8000'), PHP_URL_SCHEME) === 'https' ? 'none' : 'lax'),
 
     /*
     |--------------------------------------------------------------------------
